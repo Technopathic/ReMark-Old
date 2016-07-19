@@ -1,0 +1,22 @@
+<h2 class="content-h2" ui-sref="main.channel({ channelSlug: topicsChannel})">{{topicsTitle}}</h2>
+<md-divider></md-divider>
+<md-list>
+  <md-list-item class="listItem" ng-repeat="topic in topics.data" ui-sref="main.details({topicSlug:topic.topicSlug, topicID:topic.id})">
+    <img ng-if="topic.topicThumbnail != 0" ng-src="{{topic.topicThumbnail}}" class="md-avatar" />
+    <img ng-if="topic.topicThumbnail == 0" ng-src="{{topic.avatar}}" class="md-avatar"/>
+    <div class="md-list-item-text">
+      <p>{{topic.topicTitle}}</p>
+      <span>
+        {{topic.created_at | amCalendar}}
+        &nbsp; - &nbsp;
+        <md-icon class="material-icons md-18">chat_bubble_outline</md-icon> {{topic.topicReplies}}
+        <md-icon class="material-icons md-18">whatshot</md-icon> {{topic.topicViews}}
+      </span>
+    </div>
+  </md-list-item>
+</md-list>
+
+<div ng-if="topics.current_page < topics.last_page" class="{{paginationClass}}" layout="row" layout-align="center center">
+  <md-button ng-if="topics.current_page != 1" ng-click="getTopics(topicsChannel, topicsCount, topics.current_page - 1)">Back</md-button>
+  <md-button ng-if="topics.current_page < topics.last_page" ng-click="getTopics(topicsChannel, topicsCount, topics.current_page + 1)">More</md-button>
+</div>

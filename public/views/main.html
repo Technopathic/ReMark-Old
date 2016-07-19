@@ -1,0 +1,40 @@
+<navbar></navbar>
+
+<div class="notice" ng-if="mainOptions.homePage == -2"  layout="column" layout-align="center center">
+  <div class="detail-header">
+    <span flex></span>
+    <h1>We are currently Offline.</h1>
+    <span>Please check back with us shortly.</span>
+  </div>
+</div>
+
+<main ui-view></main>
+
+<div hide-xs hide-gt-xs show-gt-md hide-gt ng-if="authenticated != true && showSubscription == true" class="subscriptionBox" layout="row">
+  <md-card>
+    <md-card-title-media>
+      <div class="md-media-sm card-media"><img ng-src="{{mainOptions.siteLogo}}"/></div>
+    </md-card-title-media>
+     <md-card-title>
+       <md-card-title-text>
+         <span class="md-headline">Follow {{mainOptions.website}}!</span>
+       </md-card-title-text>
+     </md-card-title>
+     <div layout="column" layout-align="center center">
+       <md-input-container class="md-block" flex-gt-sm>
+         <label>Email</label>
+         <input ng-model="subscriptionData.email"/>
+       </md-input-container>
+     </div>
+     <md-card-actions layout="row" layout-align="center center">
+       <md-button ng-click="doSubscription()"><md-icon class="material-icons">check</md-icon></md-button>
+       <md-button ng-click="closeSubscription()"><md-icon class="material-icons">close</md-icon></md-button>
+     </md-card-actions>
+   </md-card>
+</div>
+
+<footer layout="row">
+  <div flex></div>
+  <div class="copyright" flex><small>&copy; {{mainOptions.website}} - Powered by ReMark</small></div>
+  <div flex</div>
+</footer>

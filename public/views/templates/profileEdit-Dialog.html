@@ -1,0 +1,85 @@
+<md-dialog aria-label="Profile" ng-cloak flex="70">
+  <form>
+    <md-dialog-content>
+      <div layout="row" layout-sm="column" layout-padding>
+        <div layout="column" flex>
+          <md-input-container class="md-icon-float md-block">
+            <md-icon class="material-icons">person</md-icon>
+            <label>Display Name</label>
+            <input ng-model="profile.displayName" type="text"/>
+          </md-input-container>
+          <div layout="column" layout-align="start start">
+            <input ngf-select="" class="ng-hide" ng-model="profile.avatar" id="editProfileImg" ngf-accept="'image/*'" type="file" ngf-max-size="10MB"/>
+            <label for="editProfileImg" class="md-button">Set Avatar</label>
+            <div class="preview-image">
+              <img ngf-src="profile.avatar" />
+            </div>
+          </div>
+          <div layout="column" layout-align="start start">
+            <input ngf-select="" class="ng-hide" ng-model="profile.banner" id="editProfileBanner" ngf-accept="'image/*'" type="file" ngf-max-size="10MB"/>
+            <label for="editProfileBanner" class="md-button">Set Banner</label>
+            <div class="preview-image">
+              <img ngf-src="profile.banner" />
+            </div>
+          </div>
+          <md-input-container class="md-icon-float md-block">
+            <md-icon class="material-icons">mode_edit</md-icon>
+            <label>About Me</label>
+            <textarea ng-model="profile.aboutMe"></textarea>
+          </md-input-container>
+        </div>
+        <div layout="column" flex>
+          <md-input-container class="md-icon-float md-block">
+            <md-icon class="material-icons">email</md-icon>
+            <label>Email</label>
+            <input ng-model="profile.email" type="email">
+          </md-input-container>
+          <md-input-container class="md-icon-float md-block">
+            <md-icon class="material-icons">loyalty</md-icon>
+            <label>Tag Line</label>
+            <textarea ng-model="profile.profileTitle" ></textarea>
+          </md-input-container>
+          <md-input-container class="md-icon-float md-block">
+            <md-icon class="material-icons">lock_outline</md-icon>
+            <label>New Password</label>
+            <input ng-model="profile.newPassword" type="text">
+          </md-input-container>
+          <md-input-container class="md-icon-float md-block">
+            <md-icon class="material-icons">lock</md-icon>
+            <label>Confirm Password</label>
+            <input ng-model="profile.confirmPassword" type="text">
+          </md-input-container>
+          <md-input-container class="md-icon-float md-block">
+            <md-icon class="material-icons">public</md-icon>
+            <label>Website</label>
+            <input ng-model="profile.website" type="text">
+          </md-input-container>
+          <md-input-container class="md-icon-float md-block">
+            <md-switch ng-model="profile.emailDigest" aria-label="Email Digest" class="md-block">
+              Email a Weekly Digest
+            </md-switch>
+          </md-input-container>
+          <md-input-container class="md-icon-float md-block">
+            <md-switch ng-model="profile.emailReply" aria-label="Email Replies" class="md-block">
+              Email Replies about You
+            </md-switch>
+          </md-input-container>
+          <md-button ng-click="deactivate()" class="md-block">Deactivate Account</md-button>
+          <div ng-show="deactivateWarning == 'true'" layout="column">
+            <md-button ng-click="doDeactivate()" class="md-block">Sure?</md-button>
+            <p>Are you sure? You will not be able to use this account anymore.</p>
+          </div>
+        </div>
+      </div>
+      <md-divider></md-divider>
+      <div class="md-dialog-actions" layout="row" layout-align="end end">
+        <md-button type="submit" ng-click="profileEdit()">
+         Confirm Changes
+        </md-button>
+        <md-button ng-click="dialogClose()">
+          Cancel
+        </md-button>
+      </div>
+    </md-dialog-content>
+  </form>
+</md-dialog>

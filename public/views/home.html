@@ -1,0 +1,17 @@
+
+<!-- Normal Layout -->
+<div ng-if="mainOptions.homePage == 0">
+  <div ng-if="mainOptions.homeBanner == 1">
+    <banner selectClass="featureSelect" transition="true"></banner>
+  </div>
+  <div class="custom-container" layout="column" flex="100" layout-align="center" layout-padding>
+    <div layout="row" layout-sm="column" layout-xs="column">
+      <grid flex="100" flex-gt-sm="75" topicsTitle="ReMark News" boxSize="50" paginationClass="paginationButtons" topicsChannel="ReMark"></grid>
+      <list flex="100" flex-gt-sm="25" topicsTitle="Features" paginationClass="paginationButtons" topicsChannel="Featured" ></list>
+    </div>
+    <div layout="row" layout-sm="column" layout-xs="column">
+      <grid flex="100" topicsTitle="Guides" boxSize="33" paginationClass="paginationButtons" topicsChannel="Guides"></grid>
+    </div>
+  </div>
+</div>
+<!-- End Layout -->

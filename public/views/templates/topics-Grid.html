@@ -1,0 +1,17 @@
+<h2 class="content-h2" ui-sref="main.channel({ channelSlug: topicsChannel})">{{topicsTitle}}</h2>
+<md-divider></md-divider>
+<div class="{{topicsClass}}" layout="row" layout-sm="column" layout-xs="column" layout-wrap layout-padding>
+  <div layout="column" flex="100" flex-gt-sm="{{boxSize}}" ng-repeat="topic in topics.data">
+    <div class="post-box" ng-style="{'background-image':'url({{topic.topicThumbnail}})'}" ui-sref="main.details({topicSlug:topic.topicSlug, topicID:topic.id})" layout="column">
+      <span flex></span>
+      <div class="post-details" layout="row" layout-align="start end">
+        <h3>{{topic.topicTitle}}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-if="topics.current_page < topics.last_page" class="{{paginationClass}}" layout="row" layout-align="center center">
+  <md-button ng-if="topics.current_page != 1" ng-click="getTopics(topicsChannel, topicsCount, topics.current_page - 1)"><md-icon class="material-icons">keyboard_arrow_left</md-icon> Previous</md-button>
+  <md-button ng-if="topics.current_page < topics.last_page" ng-click="getTopics(topicsChannel, topicsCount, topics.current_page + 1)">Next <md-icon class="material-icons">keyboard_arrow_right</md-icon></md-button>
+</div>

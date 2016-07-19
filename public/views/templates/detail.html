@@ -1,0 +1,30 @@
+<div class="detail-header {{headerClass}}">
+  <h1>{{topic.topicTitle}}</h1>
+  <span>{{topic.created_at | amDateFormat:'ddd, MMM Do YYYY, h:mm:ss a'}} <span ng-if="topic.topicChannel != 1" >In {{topic.channelTitle}}</span></span>
+</div>
+
+<div ng-if="topic.topicType == 'Blog'"  class="detail-banner {{imageClass}}">
+  <img ng-if="topic.topicImg != 0" src="{{topic.topicImg}}"/>
+</div>
+
+<div class="audioDetailContainer {{audioClass}}" ng-if="topic.topicType == 'Audio'">
+  <div class="audioDetailBottom" layout="row" layout-sm="column" layout-align-gt-md="center center" layout-align-md="start start">
+    <div class="audioDetailLeft" flex-gt-md="90" flex-md="100">
+      <audio id="audioPlayer" class="video-js audioDetailPlayer"></audio>
+    </div>
+    <div class="audioDetailRight" flex-gt-md="10" flex-md="100" hide-sm>
+      <img class="audioThumbnail" src="{{topic.topicThumbnail}}"/>
+    </div>
+  </div>
+  <img class="audioDetailImage" src="{{topic.topicImg}}"/>
+</div>
+
+<div class="videoDetailContainer {{videoClass}}" ng-if="topic.topicType == 'Video'">
+  <video id="videoPlayer" class="video-js videoDetailPlayer vjs-sublime-skin" controls preload="auto" data-setup='{ }' poster="{{topic.topicThumbnail}}">
+    <source ng-src="{{topic.topicVideo}}" type='video/webm'>
+  </video>
+</div>
+
+<div class="container-min detail-body {{contentClass}}" layout-padding>
+  <p markdown-to-html="topic.topicBody"></p>
+</div>

@@ -1,0 +1,36 @@
+<div class="profileBanner" ng-style="{'background-image':'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{user.banner}})'}">
+
+  <div class="profileDetail" layout="row" layout-sm="column" layout-align="center center" flex="75" flex-sm="100" layout-padding>
+    <div layout="row" layout-sm="row" flex="80" flex-sm="100" layout-align="center center" layout-padding>
+      <div class="avatar" flex="30" flex-sm="50">
+        <img ng-src="{{user.avatar}}"/>
+      </div>
+      <div class="profileInfo" layout="column" flex="70" flex-sm="50">
+        <div layout="row">
+          <h2>{{user.displayName}}</h2>
+          <span ng-if="user.roleName != 'Member'">{{user.roleName}}</span>
+        </div>
+        <div class="profileAbout">
+          <p ng-if="user.aboutMe != NULL">{{user.aboutMe}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="profileSocial" layout="column" layout-sm="row" layout-align="center center">
+      <md-button ng-if="user.website != 0"><md-icon class="material-icons">public</md-icon> Website</md-button>
+    </div>
+  </div>
+</div>
+<div class="container-min">
+  <md-list flex>
+    <md-list-item class="profileReply" ng-repeat="reply in replies.data" layout-padding ui-sref="main.details({topicSlug:reply.topicSlug, topicID:reply.topicID, '#': reply.id})">
+      <img ng-src="{{reply.avatar}}" class="md-avatar" />
+      <div layout="column">
+        <div layout="row">
+          <h3>{{reply.displayName}}</h3>
+          <span class="timeStamp" am-time-ago="reply.created_at"></span>
+        </div>
+        <p>{{reply.replyBody}}</p>
+      </div>
+    </md-list-item>
+  </md-list>
+</div>
