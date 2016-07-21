@@ -845,7 +845,9 @@ angular.module('remark.dashboard', [])
     topicAudio: topicData.data.topicAudio,
     topicVideo: topicData.data.topicVideo,
     topicStatus: "",
-    topicType: topicData.data.topicType
+    topicType: topicData.data.topicType,
+    allowReplies: Number(topicData.data.allowReplies),
+    showImage: Number(topicData.data.showImage)
   };
   $scope.channelData = {
     channelID: channelData.data.id,
@@ -1014,7 +1016,9 @@ angular.module('remark.dashboard', [])
         "topicChannel": $scope.topicData.topicChannel,
         "topicStatus": status,
         "topicType": $scope.topicData.topicType,
-        "topicImg": $scope.topicData.topicImg
+        "topicImg": $scope.topicData.topicImg,
+        "allowReplies": $scope.topicData.allowReplies,
+        "showImage": $scope.topicData.showImage
       },
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).success(function(data){
@@ -1048,11 +1052,9 @@ angular.module('remark.dashboard', [])
         }
         else if(data == 0)
         {
-          $scope.notifyToast("Please enter a title so you can autosave your topic.");
+          $scope.notifyToast("Please enter a title to autosave your topic.");
         }
       }
-    }).error(function(data) {
-      console.log(data);
     });
   };
 
@@ -1078,7 +1080,8 @@ angular.module('remark.dashboard', [])
           topicStatus: status,
           topicType: $scope.topicData.topicType,
           topicImg: $scope.topicData.topicImg,
-          topicAudio: $scope.topicData.topicAudio
+          topicAudio: $scope.topicData.topicAudio,
+          allowReplies: $scope.topicData.allowReplies
         },
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function (data) {
@@ -1142,7 +1145,8 @@ angular.module('remark.dashboard', [])
           topicStatus: status,
           topicType: $scope.topicData.topicType,
           topicImg: $scope.topicData.topicImg,
-          topicVideo: $scope.topicData.topicVideo
+          topicVideo: $scope.topicData.topicVideo,
+          allowReplies: $scope.topicData.allowReplies
         },
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function (data) {
@@ -1200,7 +1204,9 @@ angular.module('remark.dashboard', [])
         topicChannel: $scope.topicData.topicChannel,
         topicStatus: status,
         topicType: $scope.topicData.topicType,
-        topicImg: $scope.topicData.topicImg
+        topicImg: $scope.topicData.topicImg,
+        allowReplies: $scope.topicData.allowReplies,
+        showImage: $scope.topicData.showImage
       },
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).success(function(data){
@@ -1258,7 +1264,8 @@ angular.module('remark.dashboard', [])
           topicStatus: status,
           topicType: $scope.topicData.topicType,
           topicImg: $scope.topicData.topicImg,
-          topicAudio: $scope.topicData.topicAudio
+          topicAudio: $scope.topicData.topicAudio,
+          allowReplies: $scope.topicData.allowReplies
         },
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).success(function(data){
@@ -1313,7 +1320,8 @@ angular.module('remark.dashboard', [])
           topicStatus: status,
           topicType: $scope.topicData.topicType,
           topicImg: $scope.topicData.topicImg,
-          topicVideo: $scope.topicData.topicVideo
+          topicVideo: $scope.topicData.topicVideo,
+          allowReplies: $scope.topicData.allowReplies
         },
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).success(function(data){
@@ -1373,8 +1381,6 @@ angular.module('remark.dashboard', [])
       {
         $scope.notifyToast('Please enter a Title for your Channel.');
       }
-    }).error(function(data) {
-      console.log(data);
     });
   };
 
@@ -1813,11 +1819,6 @@ angular.module('remark.dashboard', [])
         displayName: $scope.profile.displayName,
         email: $scope.profile.email,
         avatar: $scope.profile.avatar,
-        banner: $scope.profile.banner,
-        profileTitle: $scope.profile.profileTitle,
-        aboutMe: $scope.profile.aboutMe,
-        location: $scope.profile.location,
-        website: $scope.profile.website,
         password: $scope.profile.newPassword,
         confirmPassword: $scope.profile.confirmPassword,
         emailReply: $scope.profile.emailReply,
@@ -1900,7 +1901,6 @@ angular.module('remark.dashboard', [])
   };
 
   $scope.saveOptions = function() {
-    console.log($scope.options.website);
     $http({
         method: 'POST',
         url: 'dashboard/saveOptions?token='+$rootScope.currentToken,
@@ -1974,7 +1974,6 @@ angular.module('remark.dashboard', [])
           if(key == index)
           {
             value.appActive = 1;
-            console.log("work");
           }
         });
         $scope.notifyToast('App activated!');

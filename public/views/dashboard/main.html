@@ -16,9 +16,6 @@
         <md-button ng-href="" ng-click="openMenu($mdOpenMenu,$event)" class="userName">{{currentUser.name}} <img class="avatarImage" src="{{currentUser.avatar}}"/></md-button>
         <md-menu-content width="4">
           <md-menu-item>
-            <md-button ui-sref="main.profile({profileName: currentUser.name})">My Profile</md-button>
-          </md-menu-item>
-          <md-menu-item>
             <md-button ng-click="editProfileDialog($event)">Settings</md-button>
           </md-menu-item>
           <md-divider></md-divider>
@@ -119,10 +116,6 @@
       </div>
     </md-toolbar>
     <md-list>
-      <md-list-item ui-sref="main.profile({profileName: currentUser.name})" ng-click="closeSheet()" class="no-padding">
-        <md-icon class="materials-icon">person_outline</md-icon>
-        <p class="media-heading">My Profile</p>
-      </md-list-item>
       <md-list-item ng-click="editProfileDialog($event); closeSheet();" class="no-padding">
         <md-icon class="materials-icon">settings</md-icon>
         <p class="media-heading">Settings</p>
@@ -324,6 +317,14 @@
             </md-option>
           </md-select>
         </md-input-container>
+        <div layout="column">
+          <md-checkbox ng-model="topicData.allowReplies" aria-label="allow replies" ng-true-value="1" ng-false-value="0">
+            Replies
+          </md-checkbox>
+          <md-checkbox ng-show="topicData.topicType == 'Blog'" ng-model="topicData.showImage" aria-label="show image" ng-true-value="1" ng-false-value="0">
+            Banner
+          </md-checkbox>
+        </div>
       </div>
     </md-sidenav>
     <md-tabs md-dynamic-height md-border-bottom>
@@ -354,6 +355,14 @@
                 </md-option>
               </md-select>
             </md-input-container>
+            <div layout="row">
+              <md-checkbox ng-model="topicData.allowReplies" aria-label="allow replies" ng-true-value="1" ng-false-value="0">
+                Replies
+              </md-checkbox>
+              <md-checkbox ng-model="topicData.showImage" aria-label="show image" ng-true-value="1" ng-false-value="0">
+                Banner
+              </md-checkbox>
+            </div>
             <md-button ng-if="activeSave.show == false" ng-click="doTopic('Published')"><md-icon class="material-icons">check</md-icon> Publish Topic</md-button>
             <md-button ng-if="activeSave.show == false" ng-click="doTopic('Draft')"><md-icon class="material-icons">save</md-icon> Save Draft</md-button>
             <md-button ng-if="activeSave.show == true" ng-click="updateTopic(activeSave.topicID, 'Published')"><md-icon class="material-icons">check</md-icon> Publish Topic</md-button>
@@ -412,6 +421,11 @@
                 </md-option>
               </md-select>
             </md-input-container>
+            <div layout="row">
+              <md-checkbox ng-model="topicData.allowReplies" aria-label="allow replies" ng-true-value="1" ng-false-value="0">
+                Replies
+              </md-checkbox>
+            </div>
             <md-button ng-if="activeSave.show == false" ng-click="doAudio('Published')"><md-icon class="material-icons">check</md-icon> Publish Topic</md-button>
             <md-button ng-if="activeSave.show == false" ng-click="doAudio('Draft')"><md-icon class="material-icons">save</md-icon> Save Draft</md-button>
             <md-button ng-if="activeSave.show == true" ng-click="updateAudio(activeSave.topicID, 'Published')"><md-icon class="material-icons">check</md-icon> Publish Topic</md-button>
@@ -470,6 +484,11 @@
                 </md-option>
               </md-select>
             </md-input-container>
+            <div layout="row">
+              <md-checkbox ng-model="topicData.allowReplies" aria-label="allow replies" ng-true-value="1" ng-false-value="0">
+                Replies
+              </md-checkbox>
+            </div>
             <md-button ng-if="activeSave.show == false" ng-click="doVideo('Published')"><md-icon class="material-icons">check</md-icon> Publish Topic</md-button>
             <md-button ng-if="activeSave.show == false" ng-click="doVideo('Draft')"><md-icon class="material-icons">save</md-icon> Save Draft</md-button>
             <md-button ng-if="activeSave.show == true" ng-click="updateVideo(activeSave.topicID, 'Published')"><md-icon class="material-icons">check</md-icon> Publish Topic</md-button>
@@ -493,7 +512,6 @@
             <md-button ng-if="displayFull == true && activeSave.show == false" ng-click="doVideo('Published')" class="md-icon-button" md-ink-ripple="false" show-sm><md-icon class="materials-icon">check</md-icon></md-button>
             <md-button ng-if="displayFull == true && activeSave.show == true" ng-click="updateVideo(activeSave.topicID, 'Draft')" class="md-icon-button" md-ink-ripple="false" show-sm><md-icon class="material-icons">save</md-icon></md-button>
             <md-button ng-if="displayFull == true && activeSave.show == true" ng-click="updateVideo(activeSave.topicID, 'Published')" class="md-icon-button" md-ink-ripple="false" show-sm><md-icon class="materials-icon">check</md-icon></md-button>
-
           </div>
         </form>
       </md-tab>

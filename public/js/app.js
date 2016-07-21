@@ -82,17 +82,6 @@ angular.module('remark', ['ui.router', 'angular-loading-bar', 'angularMoment', '
     }
   })
 
-  .state('main.profile', {
-    url: '/profile/:profileName',
-    templateUrl: 'views/profile.html',
-    controller: 'ProfileCtrl',
-    resolve: {
-      profileData: ['profileStart','$stateParams', function(profileStart, $stateParams) {
-          return profileStart.getProfile($stateParams.profileName);
-      }]
-    }
-  })
-
   .state('main.channel', {
     url: '/channel/:channelSlug',
     templateUrl: 'views/channel.html',

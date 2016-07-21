@@ -120,13 +120,13 @@ angular.module('remark.controllers', [])
 
    $scope.showProfile = function(ev, id) {
      $mdDialog.show({
-       templateUrl: 'profileDialog.html',
+       templateUrl: 'views/templates/profile-Dialog.html',
        parent: angular.element(document.body),
        targetEvent: ev,
        clickOutsideToClose:true,
        bindToController: true,
        controller: 'ProfileCtrl',
-       locals: {profileName: id}
+       locals: {id: id}
      });
    };
 
@@ -468,10 +468,6 @@ angular.module('remark.controllers', [])
     displayName: $rootScope.currentUser.displayName,
     email: $rootScope.currentUser.email,
     avatar:$rootScope.currentUser.avatar,
-    banner: $rootScope.currentUser.banner,
-    profileTitle: $rootScope.currentUser.profileTitle,
-    aboutMe: $rootScope.currentUser.aboutMe,
-    website: $rootScope.currentUser.website,
     emailDigest: $rootScope.currentUser.emailDigest,
     emailReply: $rootScope.currentUser.emailReply
   };
@@ -485,6 +481,10 @@ angular.module('remark.controllers', [])
     );
   };
 
+  $scope.dialogClose = function() {
+    $mdDialog.hide();
+  };
+
   $scope.profileEdit = function() {
     Upload.upload({
       url: 'api/updateProfile?token='+$rootScope.currentToken,
@@ -492,11 +492,6 @@ angular.module('remark.controllers', [])
         displayName: $scope.profile.displayName,
         email: $scope.profile.email,
         avatar: $scope.profile.avatar,
-        banner: $scope.profile.banner,
-        profileTitle: $scope.profile.profileTitle,
-        aboutMe: $scope.profile.aboutMe,
-        location: $scope.profile.location,
-        website: $scope.profile.website,
         password: $scope.profile.newPassword,
         confirmPassword: $scope.profile.confirmPassword,
         emailDigest: $scope.profile.emailDigest,
@@ -518,10 +513,6 @@ angular.module('remark.controllers', [])
         $rootScope.currentUser.displayName = data.displayName;
         $rootScope.currentUser.email = data.email;
         $rootScope.currentUser.avatar = data.avatar;
-        $rootScope.currentUser.banner = data.banner;
-        $rootScope.currentUser.profileTitle = data.profileTitle;
-        $rootScope.currentUser.aboutMe = data.aboutMe;
-        $rootScope.currentUser.website = data.website;
         $rootScope.currentUser.emailDigest = data.emailDigest;
         $rootScope.currentUser.emailReply = data.emailReply;
         $mdDialog.hide();
@@ -738,6 +729,14 @@ angular.module('remark.controllers', [])
       {
         $scope.notifyToast("Slow down! You've made 5 replies in an hour.");
       }
+      else if(data == 6)
+      {
+        $scope.notifyToast("You cannot reply to this child post.");
+      }
+      else if(data == 7)
+      {
+        $scope.notifyToast("Replies are not allowed on this topic.");
+      }
     }).error(function(data) {
       if(data.error == "token_expired"){
         $rootScope.authenticated = false;
@@ -754,31 +753,19 @@ angular.module('remark.controllers', [])
 
 }])
 
-.controller('ProfileCtrl', ['$scope', '$state', '$stateParams', '$http', 'profileData', function($scope, $state, $stateParams, $http, profileData) {
+.controller('ProfileCtrl', ['$scope', '$state', '$stateParams', '$http', 'id', function($scope, $state, $stateParams, $http, id) {
 
-  $scope.user = profileData.data;
-  $scope.replies = {};
+  $scope.user = {};
+  var id = id;
 
-  $scope.getReplies = function(page = 1) {
-    $http.jsonp('api/getUserReplies/'+$scope.user.id+'?page='+page+'&callback=JSON_CALLBACK')
-    .success(function (data) {
-      if(data != 0)
-      {
-        $scope.replies = data;
-      }
-      else if(data == 0) {
-
-      }
-    });
+  $scope.getProfile = function() {
+    $http.jsonp('api/getUser/' + id + '?callback=JSON_CALLBACK')
+    .success(function(data) {
+      $scope.user = data;
+    })
   };
 
-  if($scope.user.activated == 0)
-  {
-    $scope.notifyToast("This user is Inactive.");
-    $state.go('main.home');
-  } else {
-    $scope.getReplies();
-  }
+  $scope.getProfile();
 }])
 
 .controller('NotifyCtrl', ['$scope', '$state', '$stateParams', '$http', '$timeout', function($scope, $state, $stateParams, $http, $timeout) {

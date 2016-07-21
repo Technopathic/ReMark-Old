@@ -91,8 +91,8 @@ class RemarksController extends Controller
 
     public function getDetail(Request $request, $slug)
     {
-      $topic = Mtopic::where('mtopics.topicSlug', '=', $slug)->where('mtopics.topicStatus', '=', 'Published')->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicChannel', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicAudio', 'mtopics.topicVideo', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews', 'mtopics.topicBody', 'mtopics.topicAuthor', 'mtopics.topicTags', 'mtopics.topicVotes', 'mchannels.channelTitle', 'mtopics.topicType')->first();
-      $user = User::where('id', '=', $topic->topicAuthor)->select('id', 'name', 'displayName', 'profileTitle', 'avatar', 'aboutMe', 'location', 'website')->first();
+      $topic = Mtopic::where('mtopics.topicSlug', '=', $slug)->where('mtopics.topicStatus', '=', 'Published')->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicChannel', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicAudio', 'mtopics.topicVideo', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews', 'mtopics.topicBody', 'mtopics.topicAuthor', 'mtopics.topicTags', 'mtopics.topicVotes', 'mchannels.channelTitle', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage')->first();
+      $user = User::where('id', '=', $topic->topicAuthor)->select('id', 'name', 'displayName', 'avatar', 'website')->first();
       $relates = Mtopic::where('mtopics.id', '!=', $topic->id)->where('mtopics.topicStatus', '=', 'Published')->where('mtopics.topicThumbnail', '!=', 0)->where('mtopics.topicChannel', '=', $topic->topicChannel)->orderBy('mtopics.created_at', 'DESC')->take(4)->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicSlug', 'mtopics.topicThumbnail', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews')->get();
       if(count($relates) < 4)
       {
@@ -186,6 +186,12 @@ class RemarksController extends Controller
         $replyParent = $request->json('parentID');
         $childCount = 0;
 
+        $topicCheck = Mtopic::find($topicID);
+        if($topicCheck->allowReplies == 0)
+        {
+          return Response::json(7)->setCallback($request->input('callback'));
+        }
+
         $pastReplies = Mreply::where('replyAuthor', '=', $replyAuthor->id)->select('id', 'created_at')->orderBy('id', 'DESC')->skip(5)->take(1)->first();
         $currentTime = date('Y-m-d H:i:s');
 
@@ -212,7 +218,7 @@ class RemarksController extends Controller
           $converter = new HtmlConverter();
           $replyBody = $converter->convert($replyBody);
 
-          if(substr_count($replyBody, 'img') > 1 || substr_count($replyBody, 'href') > 1 || substr_count($replyBody, 'youtube') > 1)
+          if(substr_count($replyBody, 'img') > 1 || substr_count($replyBody, 'href') > 1 || substr_count($replyBody, 'youtube.com') > 1)
           {
             return Response::json(4)->setCallback($request->input('callback'));
           }
@@ -310,7 +316,7 @@ class RemarksController extends Controller
 
     public function getUser(Request $request, $name)
     {
-      $user = User::where('users.name', '=', $name)->where('users.ban', '=', 0)->join('roles', 'users.role', '=', 'roles.id')->select('users.id', 'users.name', 'users.displayName', 'users.avatar', 'users.banner', 'users.profileTitle', 'users.aboutMe', 'users.location', 'users.website', 'users.created_at', 'users.last_login', 'users.activated', 'roles.roleName', 'users.replies', 'users.topics')->first();
+      $user = User::where('users.name', '=', $name)->where('users.ban', '=', 0)->join('roles', 'users.role', '=', 'roles.id')->select('users.id', 'users.name', 'users.displayName', 'users.avatar', 'roles.roleName')->first();
 
       if(!empty($user))
       {
@@ -322,29 +328,6 @@ class RemarksController extends Controller
       }
     }
 
-    public function getUserTopics(Request $request, $name)
-    {
-      $user = User::where('name', '=', $name)->where('ban', '=', 0)->select('id', 'name', 'displayName', 'avatar', 'aboutMe', 'location', 'website', 'created_at')->first();
-
-      if(!empty($user))
-      {
-        $topics = Mtopic::where('topicAuthor', '=', $name)->where('topicStatus', '=', 0)->orderBy('created_at', 'DESC')->select('id', 'topicTitle', 'topicSlug', 'topicThumbnail', 'created_at')->paginate(10);
-
-        return Response::json($topics)->setCallback($request->input('callback'));
-      }
-      else
-      {
-        return Response::json(1)->setCallback($request->input('callback'));
-      }
-    }
-
-    public function getUserReplies(Request $request, $id)
-    {
-        $replies = Mreply::where('mreplies.replyAuthor', '=', $id)->where('mreplies.replyApproved', '=', 1)->join('mtopics', 'mreplies.topicID', '=', 'mtopics.id')->join('users', 'mreplies.replyAuthor', '=', 'users.id')->orderBy('mreplies.created_at', 'DESC')->select('mreplies.id', 'mreplies.replyBody', 'mreplies.created_at', 'mtopics.topicSlug', 'mtopics.topicTitle', 'mtopics.topicThumbnail', 'users.displayName', 'users.name', 'users.avatar')->paginate(10);
-
-        return Response::json($replies)->setCallback($request->input('callback'));
-    }
-
     public function updateProfile(Request $request)
     {
       $id = Auth::user()->id;
@@ -352,15 +335,7 @@ class RemarksController extends Controller
 
       $displayName = Purifier::clean($request->input('displayName'));
       $email = Purifier::clean($request->input('email'));
-      $profileTitle = Purifier::clean($request->input('profileTitle'));
       $avatar = $request->file('avatar');
-      $banner = $request->file('banner');
-      $aboutMe = Purifier::clean($request->input('aboutMe'));
-      $location = Purifier::clean($request->input('location'));
-      $facebook = Purifier::clean($request->input('facebook'));
-      $twitter = Purifier::clean($request->input('twitter'));
-      $google = Purifier::clean($request->input('google'));
-      $website = Purifier::clean($request->input('website'));
       $password = Purifier::clean($request->input('password'));
       $confirm = Purifier::clean($request->input('confirm'));
       $emailReply = Purifier::clean($request->input('emailReply'));
@@ -376,34 +351,6 @@ class RemarksController extends Controller
       if($email != NULL)
       {
         $profile->email = $email;
-      }
-      if($profileTitle != NULL)
-      {
-        $profile->profileTitle = $profileTitle;
-      }
-      if($aboutMe != NULL)
-      {
-        $profile->aboutMe = $aboutMe;
-      }
-      if($location != NULL)
-      {
-        $profile->location = $location;
-      }
-      if($facebook != NULL)
-      {
-        $profile->facebook = $facebook;
-      }
-      if($twitter != NULL)
-      {
-        $profile->twitter = $twitter;
-      }
-      if($google != NULL)
-      {
-        $profile->google = $google;
-      }
-      if($website != NULL)
-      {
-        $profile->website = $website;
       }
       if($emailReply != NULL)
       {
@@ -453,49 +400,6 @@ class RemarksController extends Controller
           $profile->avatar = $avatar;
         }
       }
-
-      if($banner != NULL)
-      {
-
-        if(File::size($banner) > 2000)
-        {
-          return Response::json(2)->setCallback($request->input('callback'));
-        }
-        else
-        {
-
-          $imageFile = 'storage/media/users/banners';
-
-          if (!is_dir($imageFile)) {
-            mkdir($imageFile,0777,true);
-          }
-
-          $fileName = str_random(8);
-          $banner->move($imageFile, $fileName.'.png');
-          $banner = $imageFile.'/'.$fileName.'.png';
-
-          if (extension_loaded('fileinfo')) {
-            $img = Image::make($banner);
-
-            list($width, $height) = getimagesize($banner);
-            if($width > 1600)
-            {
-              $img->resize(1600, null, function ($constraint) {
-                  $constraint->aspectRatio();
-              });
-              if($height > 400)
-              {
-                $img->crop(1600, 400);
-              }
-            }
-            $img->save($banner);
-          }
-
-          $profile->banner = $banner;
-
-        }
-      }
-
       if($password != NULL)
       {
         if($password === $confirm)
@@ -509,7 +413,7 @@ class RemarksController extends Controller
 
       $profile->save();
 
-      $userData = User::where('users.id', '=', $profile->id)->join('roles', 'users.role', '=', 'roles.id')->select('users.displayName', 'users.email', 'users.location', 'users.facebook', 'users.twitter', 'users.google', 'users.website', 'users.aboutMe', 'users.profileTitle', 'users.avatar', 'users.banner')->first();
+      $userData = User::where('users.id', '=', $profile->id)->join('roles', 'users.role', '=', 'roles.id')->select('users.displayName', 'users.email', 'users.avatar')->first();
       return Response::json($userData)->setCallback($request->input('callback'));
     }
 
@@ -573,8 +477,6 @@ class RemarksController extends Controller
         $notification->notificationType = 'Message';
         $notification->notificationRead = 0;
         $notification->save();
-
-        //DB::table('notifications')->insert(array('userID' => $recipientID, 'notifierID' => $senderID, 'contentID' => $message->id, 'notificationType' => 'Message', 'notificationRead' => 0));
 
         return Response::json(1)->setCallback($request->input('callback'));
       } else {

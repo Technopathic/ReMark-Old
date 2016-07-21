@@ -33,6 +33,7 @@ class CreateMtopicsTable extends Migration
         $table->string('topicType')->default('Blog');
         $table->boolean('pageMenu')->default(0);
         $table->boolean('allowReplies')->default(1);
+        $table->boolean('showImage')->default(1);
         $table->timestamps(3);
       });
     }

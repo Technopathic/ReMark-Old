@@ -29,7 +29,7 @@
         <md-button ng-href="" aria-label="Open Menu" ng-click="openMenu($mdOpenMenu,$event)" class="userName">{{currentUser.name}} <img class="avatarImage" src="{{currentUser.avatar}}"/></md-button>
         <md-menu-content width="4">
           <md-menu-item>
-            <md-button ui-sref="main.profile({profileName: currentUser.name})"><md-icon class="materials-icon">person_outline</md-icon> My Profile</md-button>
+            <md-button ng-click="showProfile($event, currentUser.name)"><md-icon class="materials-icon">person_outline</md-icon> My Profile</md-button>
           </md-menu-item>
           <md-menu-item>
             <md-button ng-click="editProfileDialog($event)"><md-icon class="materials-icon">settings</md-icon> Settings</md-button>
@@ -80,7 +80,7 @@
         </div>
         <md-divider></md-divider>
       </md-list-item>
-      <md-list-item ng-if="searchType == 'User'" ng-repeat="result in searchResults.data" ui-sref="main.profile({profileName: result.name})" >
+      <md-list-item ng-if="searchType == 'User'" ng-repeat="result in searchResults.data" ng-click="showProfile($event, result.name)" >
         <img ng-src="{{result.avatar}}" class="md-avatar" />
         <div class="md-list-item-text">
           <span class="media-heading">{{result.displayName}}</span>
@@ -144,7 +144,7 @@
       </div>
     </md-toolbar>
     <md-list>
-      <md-list-item ui-sref="main.profile({profileName: currentUser.name})" ng-click="closeSheet()" class="no-padding">
+      <md-list-item ng-click="showProfile($event, currentUser.name)" ng-click="closeSheet()" class="no-padding">
         <md-icon class="materials-icon">person_outline</md-icon>
         <p class="media-heading">My Profile</p>
       </md-list-item>

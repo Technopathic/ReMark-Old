@@ -38,7 +38,7 @@ class RemarkAdminsController extends Controller
     if($user->role == 1)
     {
       $channels = Mchannel::select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'channelMenu', 'created_at')->paginate(10);
-      $topics = Mtopic::join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicVotes', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicType', 'mtopics.pageMenu', 'mtopics.topicStatus', 'mtopics.created_at', 'mchannels.channelTitle')->orderBy('mtopics.created_at', 'DESC')->paginate(10);
+      $topics = Mtopic::join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicVotes', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicType', 'mtopics.pageMenu', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.topicStatus', 'mtopics.created_at', 'mchannels.channelTitle')->orderBy('mtopics.created_at', 'DESC')->paginate(10);
 
       return Response::json(['channels' => $channels, 'topics' => $topics])->setCallback($request->input('callback'));
     } else {
@@ -53,9 +53,9 @@ class RemarkAdminsController extends Controller
     {
       if($id == 0)
       {
-        $topics = Mtopic::join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicVotes', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicType', 'mtopics.pageMenu', 'mtopics.topicStatus', 'mtopics.created_at', 'mchannels.channelTitle')->orderBy('mtopics.created_at', 'DESC')->paginate(10);
+        $topics = Mtopic::join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicVotes', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicType', 'mtopics.pageMenu', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.topicStatus', 'mtopics.created_at', 'mchannels.channelTitle')->orderBy('mtopics.created_at', 'DESC')->paginate(10);
       } else {
-        $topics = Mtopic::where('mtopics.topicChannel', '=', $id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicVotes', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicType', 'mtopics.pageMenu', 'mtopics.topicStatus', 'mtopics.created_at', 'mchannels.channelTitle')->orderBy('mtopics.created_at', 'DESC')->paginate(10);
+        $topics = Mtopic::where('mtopics.topicChannel', '=', $id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicVotes', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicType', 'mtopics.pageMenu', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.topicStatus', 'mtopics.created_at', 'mchannels.channelTitle')->orderBy('mtopics.created_at', 'DESC')->paginate(10);
       }
 
       return Response::json($topics)->setCallback($request->input('callback'));
@@ -69,7 +69,7 @@ class RemarkAdminsController extends Controller
     $user = Auth::user();
     if($user->role == 1)
     {
-      $topic = Mtopic::where('mtopics.id', '=', $id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicAudio', 'mtopics.topicVideo', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicType', 'mtopics.created_at', 'mchannels.channelTitle')->first();
+      $topic = Mtopic::where('mtopics.id', '=', $id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicAudio', 'mtopics.topicVideo', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.created_at', 'mchannels.channelTitle')->first();
 
       $replies = Mreply::where('mreplies.topicID', '=', $id)->where('mreplies.replyParent', '=', 0)->join('users', 'mreplies.replyAuthor', '=', 'users.id')->orderBy('mreplies.created_at', 'ASC')->select('mreplies.id', 'mreplies.replyParent', 'mreplies.created_at', 'mreplies.replyBody', 'mreplies.childCount', 'mreplies.replyFlagged', 'mreplies.replyFeature', 'mreplies.replyApproved', 'users.avatar', 'users.name', 'users.displayName')->get()->toArray();
       $childReplies = Mreply::where('mreplies.topicID', '=', $id)->where('mreplies.replyParent', '!=', 0)->join('users', 'mreplies.replyAuthor', '=', 'users.id')->orderBy('mreplies.created_at', 'ASC')->select('mreplies.id', 'mreplies.replyParent', 'mreplies.created_at', 'mreplies.replyBody', 'users.avatar', 'mreplies.replyFlagged', 'mreplies.replyFeature', 'mreplies.replyApproved', 'users.name', 'users.displayName')->get()->toArray();
@@ -142,6 +142,8 @@ class RemarkAdminsController extends Controller
         $topicTags = $request->input('topicTags');
         $topicStatus = $request->input('topicStatus');
         $topicType = $request->input('topicType');
+        $allowReplies = $request->input('allowReplies');
+        $showImage = $request->input('showImage');
 
         if (preg_match('/[A-Za-z]/', $topicTitle) || preg_match('/[0-9]/', $topicTitle))
         {
@@ -221,6 +223,8 @@ class RemarkAdminsController extends Controller
           $topic->topicFeature = 0;
           $topic->topicTags = $topicTags;
           $topic->topicType = $topicType;
+          $topic->allowReplies = $allowReplies;
+          $topic->showImage = $showImage;
           $topic->save();
 
           $channelCount = Mchannel::where('id', '=', $topicChannel)->increment('channelTopics');
@@ -232,7 +236,7 @@ class RemarkAdminsController extends Controller
             DB::table('notifications')->insert(array('userID' => $notifyUsers->id, 'notifierID' => $topicAuthor, 'contentID' => $topic->id, 'notificationType' => 'Alert', 'notificationSubType' => 'Topic', 'notificationRead' => 0));
           }
 
-          $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.created_at', 'mchannels.channelTitle')->first();
+          $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.created_at', 'mchannels.channelTitle')->first();
           return Response::json($topicData)->setCallback($request->input('callback'));
         } else {
           return Response::json(0)->setCallback($request->input('callback'));
@@ -265,6 +269,9 @@ class RemarkAdminsController extends Controller
         $topicTags = $request->input('topicTags');
         $topicStatus = $request->input('topicStatus');
         $topicType = "Audio";
+        $allowReplies = $request->input('allowReplies');
+        $showImage = 1;
+
 
         if (preg_match('/[A-Za-z]/', $topicTitle) || preg_match('/[0-9]/', $topicTitle))
         {
@@ -360,6 +367,8 @@ class RemarkAdminsController extends Controller
           $topic->topicFeature = 0;
           $topic->topicTags = $topicTags;
           $topic->topicType = $topicType;
+          $topic->allowReplies = $allowReplies;
+          $topic->showImage = $showImage;
           $topic->save();
 
           $channelCount = Mchannel::where('id', '=', $topicChannel)->increment('channelTopics');
@@ -371,7 +380,7 @@ class RemarkAdminsController extends Controller
             DB::table('notifications')->insert(array('userID' => $notifyUsers->id, 'notifierID' => $topicAuthor, 'contentID' => $topic->id, 'notificationType' => 'Alert', 'notificationSubType' => 'Topic', 'notificationRead' => 0));
           }
 
-          $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.created_at', 'mchannels.channelTitle')->first();
+          $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.created_at', 'mchannels.channelTitle')->first();
           return Response::json($topicData)->setCallback($request->input('callback'));
         } else {
           return Response::json(0)->setCallback($request->input('callback'));
@@ -404,6 +413,8 @@ class RemarkAdminsController extends Controller
         $topicTags = $request->input('topicTags');
         $topicStatus = $request->input('topicStatus');
         $topicType = "Video";
+        $allowReplies = $request->input('allowReplies');
+        $showImage = 1;
 
         if (preg_match('/[A-Za-z]/', $topicTitle) || preg_match('/[0-9]/', $topicTitle)) {
           $topicSlug = str_replace(' ', '-', $topicTitle);
@@ -494,6 +505,8 @@ class RemarkAdminsController extends Controller
           $topic->topicFeature = 0;
           $topic->topicTags = $topicTags;
           $topic->topicType = $topicType;
+          $topic->allowReplies = $allowReplies;
+          $topic->showImage = $showImage;
           $topic->save();
 
           $channelCount = Mchannel::where('id', '=', $topicChannel)->increment('channelTopics');
@@ -505,7 +518,7 @@ class RemarkAdminsController extends Controller
             DB::table('notifications')->insert(array('userID' => $notifyUsers->id, 'notifierID' => $topicAuthor, 'contentID' => $topic->id, 'notificationType' => 'Alert', 'notificationSubType' => 'Topic', 'notificationRead' => 0));
           }
 
-          $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.created_at', 'mchannels.channelTitle')->first();
+          $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.created_at', 'mchannels.channelTitle')->first();
           return Response::json($topicData)->setCallback($request->input('callback'));
         }
         else {
@@ -555,6 +568,8 @@ class RemarkAdminsController extends Controller
         $topicTags = $request->input('topicTags');
         $topicStatus = $request->input('topicStatus');
         $topicType = $request->input('topicType');
+        $allowReplies = $request->input('allowReplies');
+        $showImage = $request->input('showImage');
 
         if($topicTitle != NULL)
         {
@@ -637,11 +652,13 @@ class RemarkAdminsController extends Controller
           $topic->topicImg = $topicImg;
           $topic->topicThumbnail = $topicThumbnail;
         }
+        $topic->allowReplies = $allowReplies;
+        $topic->showImage = $showImage;
         $topic->topicStatus = $topicStatus;
         $topic->topicType = $topicType;
         $topic->save();
 
-        $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.created_at', 'mchannels.channelTitle')->first();
+        $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.created_at', 'mchannels.channelTitle')->first();
         return Response::json($topicData)->setCallback($request->input('callback'));
       }
     } else {
@@ -673,6 +690,8 @@ class RemarkAdminsController extends Controller
         $topicTags = $request->input('topicTags');
         $topicStatus = $request->input('topicStatus');
         $topicType = "Audio";
+        $allowReplies = $request->input('allowReplies');
+        $showImage = 1;
 
         if($topicTitle != NULL)
         {
@@ -779,11 +798,13 @@ class RemarkAdminsController extends Controller
         }
         $topic->topicAudio = $topicAudio;
 
+        $topic->allowReplies = $allowReplies;
+        $topic->showImage = $showImage;
         $topic->topicStatus = $topicStatus;
         $topic->topicType = $topicType;
         $topic->save();
 
-        $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.created_at', 'mchannels.channelTitle')->first();
+        $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.created_at', 'mchannels.channelTitle')->first();
         return Response::json($topicData)->setCallback($request->input('callback'));
       }
     } else {
@@ -815,6 +836,8 @@ class RemarkAdminsController extends Controller
         $topicTags = $request->input('topicTags');
         $topicStatus = $request->input('topicStatus');
         $topicType = "Video";
+        $allowReplies = $request->input('allowReplies');
+        $showImage = 1;
 
         if($topicTitle != NULL)
         {
@@ -922,11 +945,13 @@ class RemarkAdminsController extends Controller
 
         $topic->topicVideo = $topicVideo;
 
+        $topic->allowReplies = $allowReplies;
+        $topic->showImage = $showImage;
         $topic->topicStatus = $topicStatus;
         $topic->topicType = $topicType;
         $topic->save();
 
-        $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.created_at', 'mchannels.channelTitle')->first();
+        $topicData = Mtopic::where('mtopics.id', '=', $topic->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicBody', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicAuthor', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicStatus', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.created_at', 'mchannels.channelTitle')->first();
         return Response::json($topicData)->setCallback($request->input('callback'));
       }
     } else {

@@ -109,7 +109,6 @@ Route::group(['prefix' => 'api'], function()
     Route::get('getChannel/{slug}', 'RemarksController@getChannel');
 
     Route::get('getUser/{name}', 'RemarksController@getUser');
-    Route::get('getUserReplies/{name}', 'RemarksController@getUserReplies');
     Route::post('updateProfile', 'RemarksController@updateProfile');
     Route::post('deactivateUser', 'RemarksController@deactivateUser');
 

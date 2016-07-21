@@ -436,6 +436,14 @@
             </md-option>
           </md-select>
         </md-input-container>
+        <div layout="column">
+          <md-checkbox ng-model="topicData.allowReplies" aria-label="allow replies" ng-true-value="1" ng-false-value="0">
+            Replies
+          </md-checkbox>
+          <md-checkbox ng-show="topicData.topicType == 'Blog'" ng-model="topicData.showImage" aria-label="show image" ng-true-value="1" ng-false-value="0">
+            Banner
+          </md-checkbox>
+        </div>
       </div>
     </md-sidenav>
     <md-tabs md-dynamic-height md-border-bottom>
@@ -464,6 +472,14 @@
                 </md-option>
               </md-select>
             </md-input-container>
+            <div layout="row">
+              <md-checkbox ng-model="topicData.allowReplies" aria-label="allow replies" ng-true-value="1" ng-false-value="0">
+                Replies
+              </md-checkbox>
+              <md-checkbox ng-model="topicData.showImage" aria-label="show image" ng-true-value="1" ng-false-value="0">
+                Banner
+              </md-checkbox>
+            </div>
             <md-button ng-click="updateTopic(topicData.topicID, 'Published')"><md-icon class="material-icons">check</md-icon> Publish Topic</md-button>
             <md-button ng-click="updateTopic(topicData.topicID, 'Draft')"><md-icon class="material-icons">save</md-icon> Save Draft</md-button>
             <md-button ng-click="closeSheet()"><md-icon class="material-icons">close</md-icon> Close</md-button>
@@ -518,6 +534,11 @@
                 </md-option>
               </md-select>
             </md-input-container>
+            <div layout="row">
+              <md-checkbox ng-model="topicData.allowReplies" aria-label="allow replies" ng-true-value="1" ng-false-value="0">
+                Replies
+              </md-checkbox>
+            </div>
             <md-button ng-click="updateAudio(topicData.topicID, 'Published')"><md-icon class="material-icons">check</md-icon> Publish Topic</md-button>
             <md-button ng-click="updateAudio(topicData.topicID, 'Draft')"><md-icon class="material-icons">save</md-icon> Save Draft</md-button>
             <md-button ng-click="closeSheet()"><md-icon class="material-icons">close</md-icon> Close</md-button>
@@ -572,6 +593,11 @@
                 </md-option>
               </md-select>
             </md-input-container>
+            <div layout="row">
+              <md-checkbox ng-model="topicData.allowReplies" aria-label="allow replies" ng-true-value="1" ng-false-value="0">
+                Replies
+              </md-checkbox>
+            </div>
             <md-button ng-click="updateVideo(topicData.topicID, 'Published')"><md-icon class="material-icons">check</md-icon> Publish Topic</md-button>
             <md-button ng-click="updateVideo(topicData.topicID, 'Draft')"><md-icon class="material-icons">save</md-icon> Save Draft</md-button>
             <md-button ng-click="closeSheet()"><md-icon class="material-icons">close</md-icon> Close</md-button>

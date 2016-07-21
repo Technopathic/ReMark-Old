@@ -15,29 +15,12 @@
               <img ngf-src="profile.avatar" />
             </div>
           </div>
-          <div layout="column" layout-align="start start">
-            <input ngf-select="" class="ng-hide" ng-model="profile.banner" id="editProfileBanner" ngf-accept="'image/*'" type="file" ngf-max-size="10MB"/>
-            <label for="editProfileBanner" class="md-button">Set Banner</label>
-            <div class="preview-image">
-              <img ngf-src="profile.banner" />
-            </div>
-          </div>
-          <md-input-container class="md-icon-float md-block">
-            <md-icon class="material-icons">mode_edit</md-icon>
-            <label>About Me</label>
-            <textarea ng-model="profile.aboutMe"></textarea>
-          </md-input-container>
         </div>
         <div layout="column" flex>
           <md-input-container class="md-icon-float md-block">
             <md-icon class="material-icons">email</md-icon>
             <label>Email</label>
             <input ng-model="profile.email" type="email">
-          </md-input-container>
-          <md-input-container class="md-icon-float md-block">
-            <md-icon class="material-icons">loyalty</md-icon>
-            <label>Tag Line</label>
-            <textarea ng-model="profile.profileTitle" ></textarea>
           </md-input-container>
           <md-input-container class="md-icon-float md-block">
             <md-icon class="material-icons">lock_outline</md-icon>
@@ -48,11 +31,6 @@
             <md-icon class="material-icons">lock</md-icon>
             <label>Confirm Password</label>
             <input ng-model="profile.confirmPassword" type="text">
-          </md-input-container>
-          <md-input-container class="md-icon-float md-block">
-            <md-icon class="material-icons">public</md-icon>
-            <label>Website</label>
-            <input ng-model="profile.website" type="text">
           </md-input-container>
           <md-input-container class="md-icon-float md-block">
             <md-switch ng-model="profile.emailDigest" aria-label="Email Digest" class="md-block">

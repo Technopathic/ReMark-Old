@@ -32,7 +32,7 @@ class UsersController extends Controller
     $user = Auth::user();
     if($user->role == 1)
     {
-      $users = User::join('roles', 'users.role', '=', 'roles.id')->select('users.id', 'users.name', 'users.displayName', 'users.email', 'users.location', 'users.website', 'users.aboutMe', 'users.profileTitle', 'users.avatar', 'users.topics', 'users.replies', 'users.role', 'users.activated', 'users.ban', 'users.last_login', 'users.created_at', 'roles.roleName')->get();
+      $users = User::join('roles', 'users.role', '=', 'roles.id')->select('users.id', 'users.name', 'users.displayName', 'users.email', 'users.avatar', 'users.topics', 'users.replies', 'users.role', 'users.activated', 'users.ban', 'users.last_login', 'users.created_at', 'roles.roleName')->get();
       $roles = Role::select('id', 'roleName', 'roleSlug', 'roleDesc', 'roleCount')->get();
 
       return Response::json(['users' => $users, 'roles' => $roles])->setCallback($request->input('callback'));
@@ -222,12 +222,7 @@ class UsersController extends Controller
 
       $displayName = $request->input('displayName');
       $email = $request->input('email');
-      $profileTitle = $request->input('profileTitle');
       $avatar = $request->file('avatar');
-      $banner = $request->file('banner');
-      $aboutMe = $request->input('aboutMe');
-      $location = $request->input('location');
-      $website = $request->input('website');
       $password = $request->input('password');
       $confirm = $request->input('confirm');
       $emailReply = $request->input('emailReply');
@@ -243,22 +238,6 @@ class UsersController extends Controller
       if($email != NULL)
       {
         $profile->email = $email;
-      }
-      if($profileTitle != NULL)
-      {
-        $profile->profileTitle = $profileTitle;
-      }
-      if($aboutMe != NULL)
-      {
-        $profile->aboutMe = $aboutMe;
-      }
-      if($location != NULL)
-      {
-        $profile->location = $location;
-      }
-      if($website != NULL)
-      {
-        $profile->website = $website;
       }
       if($emailReply != NULL)
       {
@@ -301,40 +280,6 @@ class UsersController extends Controller
         }
 
         $profile->avatar = $avatar;
-      }
-
-      if($banner != NULL)
-      {
-
-        $imageFile = 'storage/media/users/banners';
-
-        if (!is_dir($imageFile)) {
-          mkdir($imageFile,0777,true);
-        }
-
-        $ext = $banner->getClientOriginalExtension();
-        $fileName = str_random(8);
-        $banner->move($imageFile, $fileName.'.'.$ext);
-        $banner = $imageFile.'/'.$fileName.'.'.$ext;
-
-          if (extension_loaded('fileinfo')) {
-          $img = Image::make($banner);
-
-          list($width, $height) = getimagesize($banner);
-          if($width > 1600)
-          {
-            $img->resize(1600, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            if($height > 400)
-            {
-              $img->crop(1600, 400);
-            }
-          }
-          $img->save($banner);
-        }
-
-        $profile->banner = $banner;
       }
 
       if($password != NULL)
@@ -406,7 +351,7 @@ class UsersController extends Controller
     if($user->role == 1)
     {
       $role = Role::find($id);
-      $users = User::where('users.role', '=', $role->roleName)->join('roles', 'users.role', '=', 'roles.id')->select('users.id', 'users.name', 'users.displayName', 'users.email', 'users.location', 'users.website', 'users.aboutMe', 'users.profileTitle', 'users.avatar', 'users.topics', 'users.replies', 'users.role', 'users.activated', 'users.last_login', 'users.created_at', 'roles.roleName')->get();
+      $users = User::where('users.role', '=', $role->roleName)->join('roles', 'users.role', '=', 'roles.id')->select('users.id', 'users.name', 'users.displayName', 'users.email', 'users.avatar', 'users.topics', 'users.replies', 'users.role', 'users.activated', 'users.last_login', 'users.created_at', 'roles.roleName')->get();
 
       return Response::json($users)->setCallback($request->input('callback'));
     } else {

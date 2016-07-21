@@ -28,14 +28,6 @@ angular.module('remark.services', [])
 
 }])
 
-.service('profileStart', ['$http', function($http) {
-
-  this.getProfile = function(query) {
-    return $http.jsonp('api/getUser/' + query + '?callback=JSON_CALLBACK');
-  };
-
-}])
-
 .service('channelStart', ['$http', function($http) {
 
   this.getChannel = function(query) {
@@ -65,14 +57,6 @@ angular.module('remark.services', [])
   this.getFeeds = function(query) {
     return $http.jsonp('dashboard/getFeeds?token='+$rootScope.currentToken+'&callback=JSON_CALLBACK');
   };
-
-  /*this.getCatalogue = function(query) {
-    return $http.jsonp('dashboard/getCatalogue?token='+$rootScope.currentToken+'&callback=JSON_CALLBACK');
-  };
-
-  this.getBookmarks = function(query) {
-    return $http.jsonp('dashboard/getBookmarks?token='+$rootScope.currentToken+'&callback=JSON_CALLBACK');
-  };*/
 
 }])
 
