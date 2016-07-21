@@ -101,7 +101,10 @@ class RemarksController extends Controller
 
       $topic->increment('topicViews');
 
-      return Response::json(['topic' => $topic, 'user' => $user, 'relates' => $relates])->setCallback($request->input('callback'));
+      $previousTopic = Mtopic::where('mtopics.id', '<', $topic->id)->where('mtopics.topicStatus', '=', 'Published')->where('topicChannel', '=', $topic->topicChannel)->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicSlug', 'mtopics.topicChannel', 'mtopics.topicThumbnail', 'mtopics.created_at', 'mtopics.topicType')->orderBy('mtopics.id','desc')->first();
+      $nextTopic = Mtopic::where('mtopics.id', '>', $topic->id)->where('mtopics.topicStatus', '=', 'Published')->where('topicChannel', '=', $topic->topicChannel)->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicSlug', 'mtopics.topicChannel', 'mtopics.topicThumbnail', 'mtopics.created_at', 'mtopics.topicType')->orderBy('mtopics.id','asc')->first();
+
+      return Response::json(['topic' => $topic, 'user' => $user, 'relates' => $relates, 'previousTopic' => $previousTopic, 'nextTopic' => $nextTopic])->setCallback($request->input('callback'));
     }
 
     public function getReplies(Request $request, $slug)

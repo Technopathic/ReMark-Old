@@ -1,5 +1,5 @@
 ## ReMark
-ReMark is an open source publishing platform built with the content creator in mind. It works as:
+ReMark is an open source publishing platform built with the informed content creator in mind. It works as:
 
 - A blogging platform
 - A feed aggregator

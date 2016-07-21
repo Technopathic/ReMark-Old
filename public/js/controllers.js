@@ -558,13 +558,31 @@ angular.module('remark.controllers', [])
 
 }])
 
-.controller('DetailCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$http', '$mdBottomSheet', '$mdToast', '$mdDialog', 'detailData', 'replyData', function($scope, $rootScope, $state, $stateParams, $http, $mdBottomSheet, $mdToast, $mdDialog, detailData, replyData) {
+.controller('DetailCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$http', '$mdBottomSheet', '$mdToast', '$mdDialog', 'hotkeys', 'detailData', 'replyData', function($scope, $rootScope, $state, $stateParams, $http, $mdBottomSheet, $mdToast, $mdDialog, hotkeys, detailData, replyData) {
 
   $scope.topic = detailData.data.topic;
   $scope.author = detailData.data.user;
   $scope.related = detailData.data.relates;
+  $scope.previousTopic = detailData.data.previousTopic;
+  $scope.nextTopic = detailData.data.nextTopic;
 
   $scope.replies = replyData.data.replies;
+
+  hotkeys.add({
+    combo: 'left',
+    description: 'Previous Page',
+    callback: function() {
+      $state.go('main.details', { topicSlug: $scope.previousTopic.topicSlug });
+    }
+  });
+
+  hotkeys.add({
+    combo: 'right',
+    description: 'Next Page',
+    callback: function() {
+      $state.go('main.details', { topicSlug: $scope.nextTopic.topicSlug });
+    }
+  });
 
   var audio = null;
   var video = null;

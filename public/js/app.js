@@ -1,4 +1,4 @@
-angular.module('remark', ['ui.router', 'angular-loading-bar', 'angularMoment', 'ngMaterial', 'ngMessages', 'ngSanitize', 'ng-showdown', 'ngFileUpload', 'remark.controllers', 'remark.dashboard', 'remark.directives', 'remark.services'])
+angular.module('remark', ['ui.router', 'angular-loading-bar', 'angularMoment', 'ngMaterial', 'ngMessages', 'ngSanitize', 'ng-showdown', 'cfp.hotkeys', 'ngFileUpload', 'remark.controllers', 'remark.dashboard', 'remark.directives', 'remark.services'])
 
 .run(['$rootScope', '$state', '$interval', '$http', function($rootScope, $state, $interval, $http) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
