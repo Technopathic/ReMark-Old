@@ -11,6 +11,7 @@ ReMark is an open source publishing platform built with the content creator in m
 ##Screenshots
 
 ![Home page Screenshot](http://h4z.it/Image/662fda_eMarkscreen2.PNG "Home page")
+![Feed Screenshot](http://h4z.it/Image/173c86_FeedsScreen.png "Feeds")
 
 [More Screenshots](https://drive.google.com/open?id=0B0yoC1ufJySWYmpnLVg4T2NzRzg)
 
