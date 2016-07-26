@@ -21,7 +21,6 @@ class CreateMchannelsTable extends Migration
         $table->string('channelSlug', 32);
         $table->boolean('channelArchived')->default(0);
         $table->boolean('channelFeatured')->default(0);
-        $table->boolean('channelMenu')->default(0);
         $table->integer('channelTopics')->default(0);
         $table->timestamps(3);
       });

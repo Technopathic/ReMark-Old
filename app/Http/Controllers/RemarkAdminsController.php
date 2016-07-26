@@ -37,7 +37,7 @@ class RemarkAdminsController extends Controller
     $user = Auth::user();
     if($user->role == 1)
     {
-      $channels = Mchannel::select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'channelMenu', 'created_at')->paginate(10);
+      $channels = Mchannel::select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'created_at')->paginate(10);
       $topics = Mtopic::join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicThumbnail', 'mtopics.topicChannel', 'mtopics.topicSlug', 'mtopics.topicViews', 'mtopics.topicReplies', 'mtopics.topicVotes', 'mtopics.topicFeature', 'mtopics.topicTags', 'mtopics.topicType', 'mtopics.pageMenu', 'mtopics.allowReplies', 'mtopics.showImage', 'mtopics.topicStatus', 'mtopics.created_at', 'mchannels.channelTitle')->orderBy('mtopics.created_at', 'DESC')->paginate(10);
 
       return Response::json(['channels' => $channels, 'topics' => $topics])->setCallback($request->input('callback'));
@@ -98,7 +98,7 @@ class RemarkAdminsController extends Controller
     $user = Auth::user();
     if($user->role == 1)
     {
-      $channels = Mchannel::select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'channelMenu', 'created_at')->paginate(10);
+      $channels = Mchannel::select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'created_at')->paginate(10);
       return Response::json($channels)->setCallback($request->input('callback'));
     } else {
       return Response::json(403)->setCallback($request->input('callback'));
@@ -1149,7 +1149,7 @@ class RemarkAdminsController extends Controller
           $channel->channelTopics = 0;
           $channel->save();
 
-          $channelData = Mchannel::where('id', '=', $channel->id)->select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'channelMenu', 'created_at')->first();
+          $channelData = Mchannel::where('id', '=', $channel->id)->select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'created_at')->first();
           return Response::json($channelData)->setCallback($request->input('callback'));
         } else {
           return Response::json(0)->setCallback($request->input('callback'));
@@ -1257,7 +1257,7 @@ class RemarkAdminsController extends Controller
 
         $channel->save();
 
-        $channelData = Mchannel::where('id', '=', $channel->id)->select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'channelMenu', 'created_at')->first();
+        $channelData = Mchannel::where('id', '=', $channel->id)->select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'created_at')->first();
         return Response::json($channelData)->setCallback($request->input('callback'));
       }
     } else {
@@ -1294,29 +1294,7 @@ class RemarkAdminsController extends Controller
       return Response::json(403)->setCallback($request->input('callback'));
     }
   }
-
-  public function channelMenu(Request $request, $id)
-  {
-    $user = Auth::user();
-    if($user->role == 1)
-    {
-      $channel = Mchannel::find($id);
-      if($channel->channelMenu == 0)
-      {
-        $channel->channelMenu = 1;
-        $channel->save();
-        return Response::json(1)->setCallback($request->input('callback'));
-      }
-      else {
-        $channel->channelMenu = 0;
-        $channel->save();
-        return Response::json(0)->setCallback($request->input('callback'));
-      }
-    } else {
-      return Response::json(403)->setCallback($request->input('callback'));
-    }
-  }
-
+  
   public function unflagReply(Request $request, $id)
   {
     $user = Auth::user();

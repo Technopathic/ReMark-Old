@@ -54,11 +54,10 @@ class RemarksController extends Controller
 
     public function main(Request $request)
     {
-      $channels = Mchannel::where('channelMenu', '=', 1)->orderBy('id', 'ASC')->select('id', 'channelTitle', 'channelImg', 'channelSlug')->get();
       $pages = Mtopic::where('pageMenu', '=', 1)->orderBy('id', 'ASC')->select('id', 'topicTitle', 'topicSlug')->get();
       $options = Option::select('website', 'baseurl', 'siteLogo', 'homeBanner', 'aboutWebsite', 'allowAsk', 'allowSubscription', 'homePage')->first();
 
-      return Response::json(['channels' => $channels, 'pages' => $pages, 'options' => $options])->setCallback($request->input('callback'));
+      return Response::json(['pages' => $pages, 'options' => $options])->setCallback($request->input('callback'));
     }
 
     public function getTopics(Request $request, $channel = 0, $count = 6)
@@ -80,6 +79,13 @@ class RemarksController extends Controller
       $features = Mtopic::where('topicStatus', '=', 'Published')->where('topicFeature', '=', 1)->orderBy('created_at', 'DESC')->take(6)->select('id', 'topicTitle', 'topicSlug', 'topicImg', 'created_at')->get();
 
       return Response::json($features)->setCallback($request->input('callback'));
+    }
+
+    public function getChannels(Request $request)
+    {
+      $channels = Mchannel::select('id', 'channelTitle', 'channelDesc', 'channelImg', 'channelTopics', 'channelSlug', 'created_at')->get();
+
+      return Response::json($channels)->setCallback($request->input('callback'));
     }
 
     public function getChannel(Request $request, $slug)
@@ -155,7 +161,6 @@ class RemarksController extends Controller
           $notification->notificationRead = 0;
           $notification->save();
 
-          //DB::table('notifications')->insert(array('userID' => $notifyAuthor->id, 'notifierID' => $user, 'contentID' => $topic->id, 'notificationType' => 'Alert', 'notificationSubType' => 'Vote', 'notificationRead' => 0));
         }
 
         return Response::json(1)->setCallback($request->input('callback'));

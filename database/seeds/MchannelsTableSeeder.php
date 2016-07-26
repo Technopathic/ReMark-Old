@@ -21,7 +21,6 @@ class MchannelsTableSeeder extends Seeder
         'channelSlug' => 'No-Channel',
         'channelArchived' => 0,
         'channelFeatured' => 0,
-        'channelMenu' => 0,
         'channelTopics' => 0,
         'created_at' => $date,
         'updated_at' => $date
@@ -35,7 +34,6 @@ class MchannelsTableSeeder extends Seeder
         'channelSlug' => 'ReMark',
         'channelArchived' => 0,
         'channelFeatured' => 0,
-        'channelMenu' => 0,
         'channelTopics' => 2,
         'created_at' => $date,
         'updated_at' => $date
@@ -49,7 +47,6 @@ class MchannelsTableSeeder extends Seeder
         'channelSlug' => 'Featured',
         'channelArchived' => 0,
         'channelFeatured' => 0,
-        'channelMenu' => 0,
         'channelTopics' => 3,
         'created_at' => $date,
         'updated_at' => $date
@@ -63,7 +60,6 @@ class MchannelsTableSeeder extends Seeder
         'channelSlug' => 'Guides',
         'channelArchived' => 0,
         'channelFeatured' => 0,
-        'channelMenu' => 0,
         'channelTopics' => 3,
         'created_at' => $date,
         'updated_at' => $date

@@ -67,7 +67,6 @@ Route::group(['prefix' => 'dashboard'], function()
   Route::post('postChannel', 'RemarkAdminsController@storeChannel');
   Route::post('updateChannel/{id}', 'RemarkAdminsController@updateChannel');
   Route::post('deleteChannel/{id}', 'RemarkAdminsController@deleteChannel');
-  Route::get('channelMenu/{id}', 'RemarkAdminsController@channelMenu');
   Route::get('pageMenu/{id}', 'RemarkAdminsController@pageMenu');
   Route::get('unflagReply/{id}', 'RemarkAdminsController@unflagReply');
   Route::get('editReply/{id}', 'RemarkAdminsController@editReply');
@@ -106,6 +105,7 @@ Route::group(['prefix' => 'api'], function()
     Route::get('getReplies/{slug}', 'RemarksController@getReplies');
     Route::post('postReply', 'RemarksController@storeReply');
     Route::get('voteTopic/{id}', 'RemarksController@voteTopic');
+    Route::get('getChannels', 'RemarksController@getChannels');
     Route::get('getChannel/{slug}', 'RemarksController@getChannel');
 
     Route::get('getUser/{name}', 'RemarksController@getUser');

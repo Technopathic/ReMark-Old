@@ -82,6 +82,17 @@ angular.module('remark', ['ui.router', 'angular-loading-bar', 'angularMoment', '
     }
   })
 
+  .state('main.channels', {
+    url: '/channels',
+    templateUrl: 'views/channels.html',
+    controller: 'ChannelsCtrl',
+    resolve: {
+      channelsData: ['channelStart', function(channelStart) {
+          return channelStart.getChannels();
+      }]
+    }
+  })
+
   .state('main.channel', {
     url: '/channel/:channelSlug',
     templateUrl: 'views/channel.html',

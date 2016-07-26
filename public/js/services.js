@@ -30,6 +30,10 @@ angular.module('remark.services', [])
 
 .service('channelStart', ['$http', function($http) {
 
+  this.getChannels = function(query) {
+    return $http.jsonp('api/getChannels?callback=JSON_CALLBACK');
+  };
+
   this.getChannel = function(query) {
     return $http.jsonp('api/getChannel/' + query + '?callback=JSON_CALLBACK');
   };

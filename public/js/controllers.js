@@ -2,7 +2,6 @@ angular.module('remark.controllers', [])
 
 .controller('MainCtrl', ['$scope', '$state', '$http', '$rootScope', '$mdDialog', '$mdBottomSheet', '$mdToast', '$timeout', 'mainData', function($scope, $state, $http, $rootScope, $mdDialog, $mdBottomSheet, $mdToast, $timeout, mainData) {
 
-  $scope.mainChannels = mainData.data.channels;
   $scope.mainPages = mainData.data.pages;
   $scope.mainOptions = mainData.data.options;
 
@@ -168,10 +167,9 @@ angular.module('remark.controllers', [])
        escapeToClose: true,
        clickOutsideToClose: true,
        scope:$scope.$new(),
-       locals: {mainChannels: $scope.mainChannels, mainPages: $scope.mainPages, mainOptions: $scope.mainOptions},
+       locals: {mainPages: $scope.mainPages, mainOptions: $scope.mainOptions},
        controller:
-        function($scope, $mdBottomSheet, mainChannels, mainPages, mainOptions) {
-          $scope.mainChannels = mainChannels;
+        function($scope, $mdBottomSheet, mainPages, mainOptions) {
           $scope.mainPages = mainPages;
           $scope.mainOptions = mainOptions;
           $scope.closeSheet = function(){
@@ -558,6 +556,7 @@ angular.module('remark.controllers', [])
 
 }])
 
+
 .controller('DetailCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$http', '$mdBottomSheet', '$mdToast', '$mdDialog', 'hotkeys', 'detailData', 'replyData', function($scope, $rootScope, $state, $stateParams, $http, $mdBottomSheet, $mdToast, $mdDialog, hotkeys, detailData, replyData) {
 
   $scope.topic = detailData.data.topic;
@@ -768,6 +767,12 @@ angular.module('remark.controllers', [])
 .controller('ChannelCtrl', ['$scope', '$state', '$stateParams', '$http', 'channelData', function($scope, $state, $stateParams, $http, channelData) {
 
   $scope.channel = channelData.data;
+
+}])
+
+.controller('ChannelsCtrl', ['$scope', '$state', '$http', 'channelsData', function($scope, $state, $http, $mdBottomSheet, channelsData) {
+
+  $scope.channels = channelsData.data;
 
 }])
 
