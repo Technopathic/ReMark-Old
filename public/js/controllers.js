@@ -770,7 +770,7 @@ angular.module('remark.controllers', [])
 
 }])
 
-.controller('ChannelsCtrl', ['$scope', '$state', '$http', 'channelsData', function($scope, $state, $http, $mdBottomSheet, channelsData) {
+.controller('ChannelsCtrl', ['$scope', '$state', '$http', 'channelsData', function($scope, $state, $http, channelsData) {
 
   $scope.channels = channelsData.data;
 
