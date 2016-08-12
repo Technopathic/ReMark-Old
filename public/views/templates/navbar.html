@@ -1,13 +1,12 @@
-<md-toolbar class="md-primary md-hue-1" hide-xs hide-sm hide-md>
+<md-toolbar class="md-primary md-hue-1" hide-xs>
   <div class="md-toolbar-tools">
     <a ng-if="mainOptions.siteLogo != null" href="{{mainOptions.baseurl}}"><img class="navbarLogo" ng-src="{{mainOptions.siteLogo}}"/></a>
     <a href="{{mainOptions.baseurl}}" class="brand">{{mainOptions.website}}</a>
     <span flex></span>
     <div ng-if="mainOptions.homePage != -2">
-      <md-button hide-xs hide-gt-xs show-gt-md ui-sref="main.home">Home</md-button>
-      <md-button hide-xs hide-gt-xs show-gt-md ui-sref="main.channels" ><md-icon class="material-icons">widgets</md-icon>Channels</md-button>
-      <md-button ng-show="mainPages.length <= 5" hide-xs hide-gt-xs show-gt-md ng-repeat="page in mainPages" ui-sref="main.details({ topicSlug:page.topicSlug, topicID:page.id })" >{{page.topicTitle}}</md-button>
-      <md-menu ng-show="mainPages.length > 5" hide-xs hide-gt-xs show-gt-md md-offset="0 40" md-position-mode="target-right target">
+      <md-button ui-sref="main.channels" ><md-icon class="material-icons">widgets</md-icon>Channels</md-button>
+      <md-button ng-show="mainPages.length <= 5" ng-repeat="page in mainPages" ui-sref="main.details({ topicSlug:page.topicSlug, topicID:page.id })" >{{page.topicTitle}}</md-button>
+      <md-menu ng-show="mainPages.length > 5" md-offset="0 40" md-position-mode="target-right target">
         <md-button ng-href="" aria-label="Open Menu" ng-click="openMenu($mdOpenMenu,$event)"><md-icon class="material-icons">insert_drive_file</md-icon> Pages <md-icon class="material-icons">keyboard_arrow_down</md-icon></md-button>
         <md-menu-content width="4">
           <md-menu-item ng-repeat="page in mainPages">
@@ -15,9 +14,9 @@
           </md-menu-item>
         </md-menu-content>
       </md-menu>
-      <md-button hide-xs hide-gt-xs show-gt-md ng-if="authenticated == true" ng-click="askDialog()" ng-href=""><md-icon class="material-icons">help_outline</md-icon> Ask</md-button>
-      <md-button hide-xs hide-gt-xs show-gt-md ng-if="authenticated != true" ng-click="authDialog($event)" ng-href="">Sign In/ Sign Up</md-button>
-      <md-menu ng-if="authenticated == true" hide-xs hide-gt-xs show-gt-md md-offset="0 52" md-position-mode="target-right target">
+      <md-button ng-if="authenticated == true" ng-click="askDialog()" ng-href=""><md-icon class="material-icons">help_outline</md-icon> Ask</md-button>
+      <md-button ng-if="authenticated != true" ng-click="authDialog($event)" ng-href="">Sign In/ Sign Up</md-button>
+      <md-menu ng-if="authenticated == true" md-offset="0 52" md-position-mode="target-right target">
         <md-button ng-href="" aria-label="Open Menu" ng-click="openMenu($mdOpenMenu,$event)" class="userName">{{currentUser.name}} <img class="avatarImage" src="{{currentUser.avatar}}"/></md-button>
         <md-menu-content width="4">
           <md-menu-item>
@@ -83,7 +82,7 @@
   </md-list>
 </md-toolbar>
 
-<md-toolbar class="md-primary md-hue-1 footerMenu" hide-gt-md>
+<md-toolbar class="md-primary md-hue-1 footerMenu" hide-gt-sm>
   <div class="md-toolbar-tools">
     <md-button flex class="md-cornered" ui-sref="main.home"><md-icon class="material-icons">home</md-icon></md-button>
     <md-button flex class="md-cornered" ng-click="authDialog($event);" ng-if="authenticated != true"><md-icon class="material-icons">person_add</md-icon></md-button>

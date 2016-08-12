@@ -1,4 +1,4 @@
-<md-dialog aria-label="auth" flex-gt-md="30" flex="100" flex ng-cloak>
+<md-dialog aria-label="auth" flex-gt-sm="30" flex="100" ng-cloak>
   <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always">
     <md-tab label="Sign In">
       <div class="authForm" ng-if="passwordForgot != true" layout="column">
@@ -21,6 +21,9 @@
           <div class="md-dialog-actions" layout="column">
             <md-button type="submit" class="authButton" flex="100" ng-click="doAuth()">
              Sign In
+            </md-button>
+            <md-button class="authButton" flex="100" ng-click="dialogClose()">
+             Close
             </md-button>
           </div>
         </form>
@@ -85,6 +88,9 @@
           <div class="md-dialog-actions" layout="row">
             <md-button type="submit" class="authButton" flex="100" ng-click="doSignUp()">
              Sign Up
+            </md-button>
+            <md-button class="authButton" flex="100" ng-click="dialogClose()">
+             Close
             </md-button>
           </div>
         </form>

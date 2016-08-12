@@ -1128,9 +1128,9 @@ class RemarkAdminsController extends Controller
             if (extension_loaded('fileinfo')) {
               $img = Image::make($channelImg);
               list($width, $height) = getimagesize($channelImg);
-              if($width > 250)
+              if($width > 400)
               {
-                $img->resize(250, null, function ($constraint) {
+                $img->resize(400, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
               }
@@ -1235,9 +1235,9 @@ class RemarkAdminsController extends Controller
           if (extension_loaded('fileinfo')) {
             $img = Image::make($channelImg);
             list($width, $height) = getimagesize($channelImg);
-            if($width > 250)
+            if($width > 400)
             {
-              $img->resize(250, null, function ($constraint) {
+              $img->resize(400, null, function ($constraint) {
                   $constraint->aspectRatio();
               });
             }
@@ -1294,7 +1294,7 @@ class RemarkAdminsController extends Controller
       return Response::json(403)->setCallback($request->input('callback'));
     }
   }
-  
+
   public function unflagReply(Request $request, $id)
   {
     $user = Auth::user();

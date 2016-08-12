@@ -97,7 +97,7 @@ class RemarksController extends Controller
 
     public function getDetail(Request $request, $slug)
     {
-      $topic = Mtopic::where('mtopics.topicSlug', '=', $slug)->where('mtopics.topicStatus', '=', 'Published')->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicChannel', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicAudio', 'mtopics.topicVideo', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews', 'mtopics.topicBody', 'mtopics.topicAuthor', 'mtopics.topicTags', 'mtopics.topicVotes', 'mchannels.channelTitle', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage')->first();
+      $topic = Mtopic::where('mtopics.topicSlug', '=', $slug)->where('mtopics.topicStatus', '=', 'Published')->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->select('mtopics.id', 'mtopics.topicSlug', 'mtopics.topicTitle', 'mtopics.topicChannel', 'mtopics.topicImg', 'mtopics.topicThumbnail', 'mtopics.topicAudio', 'mtopics.topicVideo', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews', 'mtopics.topicBody', 'mtopics.topicAuthor', 'mtopics.topicTags', 'mtopics.topicVotes', 'mchannels.channelTitle', 'mtopics.topicType', 'mtopics.allowReplies', 'mtopics.showImage')->first();
       $user = User::where('id', '=', $topic->topicAuthor)->select('id', 'name', 'displayName', 'avatar')->first();
       $relates = Mtopic::where('mtopics.id', '!=', $topic->id)->where('mtopics.topicStatus', '=', 'Published')->where('mtopics.topicThumbnail', '!=', 0)->where('mtopics.topicChannel', '=', $topic->topicChannel)->orderBy('mtopics.created_at', 'DESC')->take(4)->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicSlug', 'mtopics.topicThumbnail', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews')->get();
       if(count($relates) < 4)
@@ -362,7 +362,7 @@ class RemarksController extends Controller
       }
       if($emailReply != NULL)
       {
-        $profile->website = $emailReply;
+        $profile->emailReply = $emailReply;
       }
       if($emailDigest != NULL)
       {
@@ -372,7 +372,7 @@ class RemarksController extends Controller
       if($avatar != NULL)
       {
 
-        if(File::size($avatar) > 2000)
+        if(File::size($avatar) > 2097152)
         {
           return Response::json(2)->setCallback($request->input('callback'));
         }
@@ -386,7 +386,7 @@ class RemarksController extends Controller
 
           $fileName = str_random(8);
           $avatar->move($imageFile, $fileName.'.png');
-          $avatar = $imageFile.'/'.$fileName.'png';
+          $avatar = $imageFile.'/'.$fileName.'.png';
 
           if (extension_loaded('fileinfo')) {
             $img = Image::make($avatar);

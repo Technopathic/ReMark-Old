@@ -407,7 +407,11 @@ angular.module('remark.controllers', [])
         $scope.notifyToast('Your passwords do not match.');
       }
     });
-  }
+  };
+
+  $scope.dialogClose = function() {
+    $mdDialog.hide();
+  };
 
 }])
 
@@ -557,7 +561,7 @@ angular.module('remark.controllers', [])
 }])
 
 
-.controller('DetailCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$http', '$mdBottomSheet', '$mdToast', '$mdDialog', 'hotkeys', 'detailData', 'replyData', function($scope, $rootScope, $state, $stateParams, $http, $mdBottomSheet, $mdToast, $mdDialog, hotkeys, detailData, replyData) {
+.controller('DetailCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$location', '$http', '$mdBottomSheet', '$mdToast', '$mdDialog', 'hotkeys', 'detailData', 'replyData', function($scope, $rootScope, $state, $stateParams, $location, $http, $mdBottomSheet, $mdToast, $mdDialog, hotkeys, detailData, replyData) {
 
   $scope.topic = detailData.data.topic;
   $scope.author = detailData.data.user;
@@ -566,6 +570,14 @@ angular.module('remark.controllers', [])
   $scope.nextTopic = detailData.data.nextTopic;
 
   $scope.replies = replyData.data.replies;
+
+  $scope.facebook = encodeURI('https://facebook.com/sharer/sharer.php?u='+$location.absUrl());
+  $scope.twitter = encodeURI('https://twitter.com/intent/tweet/?text='+$scope.topic.topicTitle+'&url='+$location.absUrl());
+  $scope.google = encodeURI('https://plus.google.com/share?url='+$location.absUrl());
+  $scope.tumblr = encodeURI('https://www.tumblr.com/widgets/share/tool?posttype=link&title='+$scope.topic.topicTitle+'&caption='+$scope.topic.topicTitle+'&content='+$location.absUrl()+'&canonicalUrl='+$location.absUrl()+'&shareSource=tumblr_share_button');
+  $scope.email = encodeURI('mailto:?subject='+$scope.topic.topicTitle+'&body='+$location.absUrl());
+  $scope.pinterest = encodeURI('https://pinterest.com/pin/create/button/?url='+$location.absUrl()+'&media='+$location.absUrl()+'&summary='+$scope.topic.topicTitle);
+  $scope.reddit = encodeURI('https://reddit.com/submit/?url='+$location.absUrl());
 
   hotkeys.add({
     combo: 'left',
