@@ -60,17 +60,33 @@ class RemarksController extends Controller
       return Response::json(['pages' => $pages, 'options' => $options])->setCallback($request->input('callback'));
     }
 
-    public function getTopics(Request $request, $channel = 0, $count = 6)
+    public function getTopics(Request $request, $channel = 0, $count = 6, $length = 500)
     {
       if($channel == '0')
       {
-        $topics = Mtopic::where('mtopics.topicStatus', '=', 'Published')->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->join('users', 'mtopics.topicAuthor', '=', 'users.id')->orderBy('mtopics.created_at', 'DESC')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicSlug', 'mtopics.topicThumbnail', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews', 'mtopics.topicChannel', 'mchannels.channelTitle', 'mtopics.topicType', 'users.displayName', 'users.name', 'users.avatar')->paginate($count);
+        $topics = Mtopic::where('mtopics.topicStatus', '=', 'Published')->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->join('users', 'mtopics.topicAuthor', '=', 'users.id')->orderBy('mtopics.created_at', 'DESC')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicSlug', 'mtopics.topicBody', 'mtopics.topicThumbnail', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews', 'mtopics.topicChannel', 'mchannels.channelTitle', 'mtopics.topicType', 'users.displayName', 'users.name', 'users.avatar')->paginate($count);
       }
       else
       {
         $channel = Mchannel::where('channelSlug', '=', $channel)->select('id', 'channelTitle', 'channelDesc', 'channelTopics')->first();
-        $topics = Mtopic::where('mtopics.topicStatus', '=', 'Published')->where('mtopics.topicChannel', '=', $channel->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->join('users', 'mtopics.topicAuthor', '=', 'users.id')->orderBy('mtopics.created_at', 'DESC')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicSlug', 'mtopics.topicThumbnail', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews', 'mtopics.topicChannel', 'mchannels.channelTitle', 'mtopics.topicType', 'users.displayName', 'users.name', 'users.avatar')->paginate($count);
+        $topics = Mtopic::where('mtopics.topicStatus', '=', 'Published')->where('mtopics.topicChannel', '=', $channel->id)->join('mchannels', 'mtopics.topicChannel', '=', 'mchannels.id')->join('users', 'mtopics.topicAuthor', '=', 'users.id')->orderBy('mtopics.created_at', 'DESC')->select('mtopics.id', 'mtopics.topicTitle', 'mtopics.topicSlug', 'mtopics.topicBody', 'mtopics.topicThumbnail', 'mtopics.created_at', 'mtopics.topicReplies', 'mtopics.topicViews', 'mtopics.topicChannel', 'mchannels.channelTitle', 'mtopics.topicType', 'users.displayName', 'users.name', 'users.avatar')->paginate($count);
       }
+
+      if(!$topics->isEmpty())
+      {
+        foreach($topics as $key => $value)
+        {
+          $topicBody = Markdown::convertToHtml($value->topicBody);
+          $topicBody = strip_tags($topicBody);
+          if(strlen($topicBody) > $length)
+          {
+            $bodyCut = substr($topicBody, 0, $length);
+            $topicBody = substr($bodyCut, 0, strrpos($bodyCut, ' ')).'...';
+            $value['topicBody'] = $topicBody;
+          }
+        }
+      }
+
       return Response::json($topics)->setCallback($request->input('callback'));
     }
 

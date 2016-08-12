@@ -99,7 +99,7 @@ Route::group(['prefix' => 'api'], function()
     Route::post('unSubscribe/{token}', 'AuthenticateController@unSubscribe');
 
     Route::get('main', 'RemarksController@main');
-    Route::get('getTopics/channel={channel}&count={count}', 'RemarksController@getTopics');
+    Route::get('getTopics/channel={channel}&count={count}&length={length}', 'RemarksController@getTopics');
     Route::get('getFeatured', 'RemarksController@getFeatured');
     Route::get('getDetail/{slug}', 'RemarksController@getDetail');
     Route::get('getReplies/{slug}', 'RemarksController@getReplies');

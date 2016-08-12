@@ -48,54 +48,29 @@ angular.module('remark.directives', [])
   }
 })
 
-.directive("grid", function($timeout, $http, $mdDialog) {
+.directive("topics", function($timeout, $http, $mdDialog) {
   return {
     restrict: 'E',
     scope: {},
     link: function(scope, element, attrs) {
-      scope.topicsClass = attrs.topicsclass;
-      scope.boxSize = attrs.boxsize;
-      scope.paginationClass = attrs.paginationclass;
-      scope.topicsChannel = attrs.topicschannel;
-      scope.topicsCount = attrs.topicscount;
+      scope.boxSize = attrs.box;
+      scope.topicsChannel = attrs.channel;
+      scope.topicsCount = attrs.count;
+      scope.topicsLength = attrs.length;
       scope.topicsPage = 1;
-      scope.topicsTitle = attrs.topicstitle;
+      scope.topicsTitle = attrs.title;
+      scope.topicsExcerpt = attrs.excerpt;
 
-      scope.getTopics = function(channel = 0, count = 6, page = 1) {
-        $http.jsonp('api/getTopics/channel='+channel+'&count='+count+'?page='+page+'&callback=JSON_CALLBACK')
+      scope.getTopics = function(channel = 0, count = 6, length = 500, page = 1) {
+        $http.jsonp('api/getTopics/channel='+channel+'&count='+count+'&length='+length+'?page='+page+'&callback=JSON_CALLBACK')
         .success(function (data){
           scope.topics = data;
         });
       };
 
-      scope.getTopics(scope.topicsChannel, scope.topicsCount, scope.topicsPage);
+      scope.getTopics(scope.topicsChannel, scope.topicsCount, scope.topicsLength, scope.topicsPage);
     },
-    templateUrl: 'views/templates/topics-Grid.html'
-  }
-})
-
-.directive("list", function($timeout, $http, $mdDialog) {
-  return {
-    restrict: 'E',
-    scope: {},
-    link: function(scope, element, attrs) {
-      scope.topicsClass = attrs.topicsclass;
-      scope.paginationClass = attrs.paginationclass;
-      scope.topicsChannel = attrs.topicschannel;
-      scope.topicsCount = attrs.topicscount;
-      scope.topicsPage = 1;
-      scope.topicsTitle = attrs.topicstitle;
-
-      scope.getTopics = function(channel = 0, count = 6, page = 1) {
-        $http.jsonp('api/getTopics/channel='+channel+'&count='+count+'?page='+page+'&callback=JSON_CALLBACK')
-        .success(function (data){
-          scope.topics = data;
-        });
-      };
-
-      scope.getTopics(scope.topicsChannel, scope.topicsCount, scope.topicsPage);
-    },
-    templateUrl: 'views/templates/topics-List.html',
+    templateUrl: 'views/templates/topics.html'
   }
 })
 
