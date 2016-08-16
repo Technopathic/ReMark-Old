@@ -48,6 +48,27 @@ angular.module('remark.directives', [])
   }
 })
 
+.directive("channels", function($timeout, $http, $mdDialog) {
+  return {
+    restrict: 'E',
+    scope: {},
+    link: function(scope, element, attrs) {
+      scope.boxSize = attrs.box;
+      scope.channelsExcerpt = attrs.excerpt;
+
+      scope.getChannels = function() {
+        $http.jsonp('api/getChannels?callback=JSON_CALLBACK')
+        .success(function (data){
+          scope.channels = data;
+        });
+      };
+
+      scope.getChannels();
+    },
+    templateUrl: 'views/templates/channels.html'
+  }
+})
+
 .directive("topics", function($timeout, $http, $mdDialog) {
   return {
     restrict: 'E',
