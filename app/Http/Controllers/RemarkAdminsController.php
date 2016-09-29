@@ -703,8 +703,15 @@ class RemarkAdminsController extends Controller
             $img->save($topicThumbnail);
           }
           else {
-            $topicImg = 0;
-            $topicThumbnail = 0;
+            if($topic->topicImg == 0)
+            {
+              $topicImg = 0;
+              $topicThumbnail = 0;
+            }
+            else {
+              $topicImg = $topic->topicImg;
+              $topicThumbnail = $topic->topicThumbnail;
+            }
           }
 
           $topic->topicImg = $topicImg;
@@ -738,8 +745,15 @@ class RemarkAdminsController extends Controller
             }
             $img->save($topicThumbnail);
           } else {
-            $topicImg = 0;
-            $topicThumbnail = 0;
+            if($topic->topicImg == 0)
+            {
+              $topicImg = 0;
+              $topicThumbnail = 0;
+            }
+            else {
+              $topicImg = $topic->topicImg;
+              $topicThumbnail = $topic->topicThumbnail;
+            }
           }
 
           $topic->topicImg = $topicImg;
@@ -854,8 +868,15 @@ class RemarkAdminsController extends Controller
             $img->save($topicThumbnail);
           }
           else {
-            $topicImg = 0;
-            $topicThumbnail = 0;
+            if($topic->topicImg == 0)
+            {
+              $topicImg = 0;
+              $topicThumbnail = 0;
+            }
+            else {
+              $topicImg = $topic->topicImg;
+              $topicThumbnail = $topic->topicThumbnail;
+            }
           }
 
           $topic->topicImg = $topicImg;
@@ -889,8 +910,15 @@ class RemarkAdminsController extends Controller
             }
             $img->save($topicThumbnail);
           } else {
-            $topicImg = 0;
-            $topicThumbnail = 0;
+            if($topic->topicImg == 0)
+            {
+              $topicImg = 0;
+              $topicThumbnail = 0;
+            }
+            else {
+              $topicImg = $topic->topicImg;
+              $topicThumbnail = $topic->topicThumbnail;
+            }
           }
 
           $topic->topicImg = $topicImg;
@@ -1027,8 +1055,15 @@ class RemarkAdminsController extends Controller
             $img->save($topicThumbnail);
           }
           else {
-            $topicImg = 0;
-            $topicThumbnail = 0;
+            if($topic->topicImg == 0)
+            {
+              $topicImg = 0;
+              $topicThumbnail = 0;
+            }
+            else {
+              $topicImg = $topic->topicImg;
+              $topicThumbnail = $topic->topicThumbnail;
+            }
           }
 
           $topic->topicImg = $topicImg;
@@ -1062,8 +1097,15 @@ class RemarkAdminsController extends Controller
             }
             $img->save($topicThumbnail);
           } else {
-            $topicImg = 0;
-            $topicThumbnail = 0;
+            if($topic->topicImg == 0)
+            {
+              $topicImg = 0;
+              $topicThumbnail = 0;
+            }
+            else {
+              $topicImg = $topic->topicImg;
+              $topicThumbnail = $topic->topicThumbnail;
+            }
           }
 
           $topic->topicImg = $topicImg;
