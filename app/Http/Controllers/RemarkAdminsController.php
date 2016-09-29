@@ -162,16 +162,37 @@ class RemarkAdminsController extends Controller
 
           if(!$request->has('topicImg'))
           {
-            $topicImg = 0;
-            $topicThumbnail = 0;
+            if($request->file('topicImg'))
+            {
+              $topicImg = $request->file('topicImg');
+              $ext = $topicImg->getClientOriginalExtension();
+              $topicImg->move($imageFile, $topicSlug.'.'.$ext);
+
+              $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
+
+              $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+              $img = Image::make($topicImg);
+
+              list($width, $height) = getimagesize($topicImg);
+              if($width > 500)
+              {
+                $img->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                if($height > 300)
+                {
+                  $img->crop(500, 300);
+                }
+              }
+              $img->save($topicThumbnail);
+            }
+            else {
+              $topicImg = 0;
+              $topicThumbnail = 0;
+            }
           }
           elseif($request->has('topicImg'))
           {
-
-            $imageFile = 'storage/media/topics/image';
-            if (!is_dir($imageFile)) {
-              mkdir($imageFile,0777,true);
-            }
 
             if(filter_var($request->input('topicImg'), FILTER_VALIDATE_URL) == true)
             {
@@ -179,30 +200,28 @@ class RemarkAdminsController extends Controller
               $topicImg = Image::make($topicImg);
               $ext = 'png';
               $topicImg->save($imageFile.'/'.$topicSlug.'.'.$ext);
-            }
-            else {
-              $topicImg = $request->file('topicImg');
-              $ext = $topicImg->getClientOriginalExtension();
-              $topicImg->move($imageFile, $topicSlug.'.'.$ext);
-            }
 
-            $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
+              $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
 
-            $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
-            $img = Image::make($topicImg);
+              $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+              $img = Image::make($topicImg);
 
-            list($width, $height) = getimagesize($topicImg);
-            if($width > 500)
-            {
-              $img->resize(500, null, function ($constraint) {
-                  $constraint->aspectRatio();
-              });
-              if($height > 300)
+              list($width, $height) = getimagesize($topicImg);
+              if($width > 500)
               {
-                $img->crop(500, 300);
+                $img->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                if($height > 300)
+                {
+                  $img->crop(500, 300);
+                }
               }
+              $img->save($topicThumbnail);
+            } else {
+              $topicImg = 0;
+              $topicThumbnail = 0;
             }
-            $img->save($topicThumbnail);
           }
 
           $topic = new Mtopic;
@@ -285,17 +304,37 @@ class RemarkAdminsController extends Controller
 
           if(!$request->has('topicImg'))
           {
-            $topicImg = 0;
-            $topicThumbnail = 0;
+            if($request->file('topicImg'))
+            {
+              $topicImg = $request->file('topicImg');
+              $ext = $topicImg->getClientOriginalExtension();
+              $topicImg->move($imageFile, $topicSlug.'.'.$ext);
+
+              $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
+
+              $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+              $img = Image::make($topicImg);
+
+              list($width, $height) = getimagesize($topicImg);
+              if($width > 500)
+              {
+                $img->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                if($height > 300)
+                {
+                  $img->crop(500, 300);
+                }
+              }
+              $img->save($topicThumbnail);
+            }
+            else {
+              $topicImg = 0;
+              $topicThumbnail = 0;
+            }
           }
           elseif($request->has('topicImg'))
           {
-
-            $imageFile = 'storage/media/topics/image';
-
-            if (!is_dir($imageFile)) {
-              mkdir($imageFile,0777,true);
-            }
 
             if(filter_var($request->input('topicImg'), FILTER_VALIDATE_URL) == true)
             {
@@ -303,16 +342,9 @@ class RemarkAdminsController extends Controller
               $topicImg = Image::make($topicImg);
               $ext = 'png';
               $topicImg->save($imageFile.'/'.$topicSlug.'.'.$ext);
-            }
-            else {
-              $topicImg = $request->file('topicImg');
-              $ext = $topicImg->getClientOriginalExtension();
-              $topicImg->move($imageFile, $topicSlug.'.'.$ext);
-            }
 
-            $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
+              $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
 
-            if (extension_loaded('fileinfo')) {
               $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
               $img = Image::make($topicImg);
 
@@ -329,7 +361,8 @@ class RemarkAdminsController extends Controller
               }
               $img->save($topicThumbnail);
             } else {
-              $topicThumbnail = $topicImg;
+              $topicImg = 0;
+              $topicThumbnail = 0;
             }
           }
 
@@ -427,17 +460,37 @@ class RemarkAdminsController extends Controller
 
           if(!$request->has('topicImg'))
           {
-            $topicImg = 0;
-            $topicThumbnail = 0;
+            if($request->file('topicImg'))
+            {
+              $topicImg = $request->file('topicImg');
+              $ext = $topicImg->getClientOriginalExtension();
+              $topicImg->move($imageFile, $topicSlug.'.'.$ext);
+
+              $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
+
+              $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+              $img = Image::make($topicImg);
+
+              list($width, $height) = getimagesize($topicImg);
+              if($width > 500)
+              {
+                $img->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                if($height > 300)
+                {
+                  $img->crop(500, 300);
+                }
+              }
+              $img->save($topicThumbnail);
+            }
+            else {
+              $topicImg = 0;
+              $topicThumbnail = 0;
+            }
           }
           elseif($request->has('topicImg'))
           {
-
-            $imageFile = 'storage/media/topics/image';
-
-            if (!is_dir($imageFile)) {
-              mkdir($imageFile,0777,true);
-            }
 
             if(filter_var($request->input('topicImg'), FILTER_VALIDATE_URL) == true)
             {
@@ -445,30 +498,28 @@ class RemarkAdminsController extends Controller
               $topicImg = Image::make($topicImg);
               $ext = 'png';
               $topicImg->save($imageFile.'/'.$topicSlug.'.'.$ext);
-            }
-            else {
-              $topicImg = $request->file('topicImg');
-              $ext = $topicImg->getClientOriginalExtension();
-              $topicImg->move($imageFile, $topicSlug.'.'.$ext);
-            }
 
-            $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
+              $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
 
-            $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
-            $img = Image::make($topicImg);
+              $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+              $img = Image::make($topicImg);
 
-            list($width, $height) = getimagesize($topicImg);
-            if($width > 500)
-            {
-              $img->resize(500, null, function ($constraint) {
-                  $constraint->aspectRatio();
-              });
-              if($height > 300)
+              list($width, $height) = getimagesize($topicImg);
+              if($width > 500)
               {
-                $img->crop(500, 300);
+                $img->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                if($height > 300)
+                {
+                  $img->crop(500, 300);
+                }
               }
+              $img->save($topicThumbnail);
+            } else {
+              $topicImg = 0;
+              $topicThumbnail = 0;
             }
-            $img->save($topicThumbnail);
           }
 
           $videoFile = 'storage/media/topics/video';
@@ -606,55 +657,76 @@ class RemarkAdminsController extends Controller
           $topic->topicTags = $topicTags;
         }
 
-        if($request->has('topicImg'))
+        if(!$request->has('topicImg'))
         {
-          if($request->input('topicImg') != 0 && $request->input != NULL)
+          if($request->file('topicImg'))
           {
-            $imageFile = 'storage/media/topics/image';
-
-            if (!is_dir($imageFile)) {
-              mkdir($imageFile,0777,true);
-            }
-
-            if(filter_var($request->input('topicImg'), FILTER_VALIDATE_URL) == true)
-            {
-              $topicImg = $request->input('topicImg');
-              $topicImg = Image::make($topicImg);
-              $ext = 'png';
-              $topicImg->save($imageFile.'/'.$topicSlug.'.'.$ext);
-            }
-            else {
-              $topicImg = $request->file('topicImg');
-              $ext = $topicImg->getClientOriginalExtension();
-              $topicImg->move($imageFile, $topicSlug.'.'.$ext);
-            }
+            $topicImg = $request->file('topicImg');
+            $ext = $topicImg->getClientOriginalExtension();
+            $topicImg->move($imageFile, $topicSlug.'.'.$ext);
 
             $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
 
-            if (extension_loaded('fileinfo')) {
-              $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
-              $img = Image::make($topicImg);
+            $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+            $img = Image::make($topicImg);
 
-              list($width, $height) = getimagesize($topicImg);
-              if($width > 500)
+            list($width, $height) = getimagesize($topicImg);
+            if($width > 500)
+            {
+              $img->resize(500, null, function ($constraint) {
+                  $constraint->aspectRatio();
+              });
+              if($height > 300)
               {
-                $img->resize(500, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-                if($height > 300)
-                {
-                  $img->crop(500, 300);
-                }
+                $img->crop(500, 300);
               }
-              $img->save($topicThumbnail);
-            } else {
-              $topicThumbnail = $topicImg;
             }
-
-            $topic->topicImg = $topicImg;
-            $topic->topicThumbnail = $topicThumbnail;
+            $img->save($topicThumbnail);
           }
+          else {
+            $topicImg = 0;
+            $topicThumbnail = 0;
+          }
+
+          $topic->topicImg = $topicImg;
+          $topic->topicThumbnail = $topicThumbnail;
         }
+        elseif($request->has('topicImg'))
+        {
+
+          if(filter_var($request->input('topicImg'), FILTER_VALIDATE_URL) == true)
+          {
+            $topicImg = $request->input('topicImg');
+            $topicImg = Image::make($topicImg);
+            $ext = 'png';
+            $topicImg->save($imageFile.'/'.$topicSlug.'.'.$ext);
+
+            $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
+
+            $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+            $img = Image::make($topicImg);
+
+            list($width, $height) = getimagesize($topicImg);
+            if($width > 500)
+            {
+              $img->resize(500, null, function ($constraint) {
+                  $constraint->aspectRatio();
+              });
+              if($height > 300)
+              {
+                $img->crop(500, 300);
+              }
+            }
+            $img->save($topicThumbnail);
+          } else {
+            $topicImg = 0;
+            $topicThumbnail = 0;
+          }
+
+          $topic->topicImg = $topicImg;
+          $topic->topicThumbnail = $topicThumbnail;
+        }
+
         $topic->allowReplies = $allowReplies;
         $topic->showImage = $showImage;
         $topic->topicStatus = $topicStatus;
@@ -731,54 +803,74 @@ class RemarkAdminsController extends Controller
           $topic->topicTags = $topicTags;
         }
 
-        if($request->has('topicImg'))
+        if(!$request->has('topicImg'))
         {
-          if($request->input('topicImg') != 0 && $request->input != NULL)
+          if($request->file('topicImg'))
           {
-            $imageFile = 'storage/media/topics/image';
-
-            if (!is_dir($imageFile)) {
-              mkdir($imageFile,0777,true);
-            }
-
-            if(filter_var($request->input('topicImg'), FILTER_VALIDATE_URL) == true)
-            {
-              $topicImg = $request->input('topicImg');
-              $topicImg = Image::make($topicImg);
-              $ext = 'png';
-              $topicImg->save($imageFile.'/'.$topicSlug.'.'.$ext);
-            }
-            else {
-              $topicImg = $request->file('topicImg');
-              $ext = $topicImg->getClientOriginalExtension();
-              $topicImg->move($imageFile, $topicSlug.'.'.$ext);
-            }
+            $topicImg = $request->file('topicImg');
+            $ext = $topicImg->getClientOriginalExtension();
+            $topicImg->move($imageFile, $topicSlug.'.'.$ext);
 
             $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
 
-            if (extension_loaded('fileinfo')) {
-              $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
-              $img = Image::make($topicImg);
+            $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+            $img = Image::make($topicImg);
 
-              list($width, $height) = getimagesize($topicImg);
-              if($width > 500)
+            list($width, $height) = getimagesize($topicImg);
+            if($width > 500)
+            {
+              $img->resize(500, null, function ($constraint) {
+                  $constraint->aspectRatio();
+              });
+              if($height > 300)
               {
-                $img->resize(500, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-                if($height > 300)
-                {
-                  $img->crop(500, 300);
-                }
+                $img->crop(500, 300);
               }
-              $img->save($topicThumbnail);
-            } else {
-              $topicThumbanil = $topicImg;
             }
-
-            $topic->topicImg = $topicImg;
-            $topic->topicThumbnail = $topicThumbnail;
+            $img->save($topicThumbnail);
           }
+          else {
+            $topicImg = 0;
+            $topicThumbnail = 0;
+          }
+
+          $topic->topicImg = $topicImg;
+          $topic->topicThumbnail = $topicThumbnail;
+        }
+        elseif($request->has('topicImg'))
+        {
+
+          if(filter_var($request->input('topicImg'), FILTER_VALIDATE_URL) == true)
+          {
+            $topicImg = $request->input('topicImg');
+            $topicImg = Image::make($topicImg);
+            $ext = 'png';
+            $topicImg->save($imageFile.'/'.$topicSlug.'.'.$ext);
+
+            $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
+
+            $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+            $img = Image::make($topicImg);
+
+            list($width, $height) = getimagesize($topicImg);
+            if($width > 500)
+            {
+              $img->resize(500, null, function ($constraint) {
+                  $constraint->aspectRatio();
+              });
+              if($height > 300)
+              {
+                $img->crop(500, 300);
+              }
+            }
+            $img->save($topicThumbnail);
+          } else {
+            $topicImg = 0;
+            $topicThumbnail = 0;
+          }
+
+          $topic->topicImg = $topicImg;
+          $topic->topicThumbnail = $topicThumbnail;
         }
 
         if($request->hasFile('topicAudio'))
@@ -880,56 +972,76 @@ class RemarkAdminsController extends Controller
           $topic->topicTags = $topicTags;
         }
 
-        if($request->hasFile('topicImg'))
+        if(!$request->has('topicImg'))
         {
-          if($request->input('topicImg') != 0 && $request->input != NULL)
+          if($request->file('topicImg'))
           {
-            $imageFile = 'storage/media/topics/image';
-
-            if (!is_dir($imageFile)) {
-              mkdir($imageFile,0777,true);
-            }
-
-            if(filter_var($request->input('topicImg'), FILTER_VALIDATE_URL) == true)
-            {
-              $topicImg = $request->input('topicImg');
-              $topicImg = Image::make($topicImg);
-              $ext = 'png';
-              $topicImg->save($imageFile.'/'.$topicSlug.'.'.$ext);
-            }
-            else {
-              $topicImg = $request->file('topicImg');
-              $ext = $topicImg->getClientOriginalExtension();
-              $topicImg->move($imageFile, $topicSlug.'.'.$ext);
-            }
+            $topicImg = $request->file('topicImg');
+            $ext = $topicImg->getClientOriginalExtension();
+            $topicImg->move($imageFile, $topicSlug.'.'.$ext);
 
             $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
 
-            if (extension_loaded('fileinfo')) {
-              $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
-              $img = Image::make($topicImg);
+            $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+            $img = Image::make($topicImg);
 
-              list($width, $height) = getimagesize($topicImg);
-              if($width > 500)
+            list($width, $height) = getimagesize($topicImg);
+            if($width > 500)
+            {
+              $img->resize(500, null, function ($constraint) {
+                  $constraint->aspectRatio();
+              });
+              if($height > 300)
               {
-                $img->resize(500, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-                if($height > 300)
-                {
-                  $img->crop(500, 300);
-                }
+                $img->crop(500, 300);
               }
-              $img->save($topicThumbnail);
-            } else {
-              $topicThumbnail = $topicImg;
             }
-
-            $topic->topicImg = $topicImg;
-            $topic->topicThumbnail = $topicThumbnail;
+            $img->save($topicThumbnail);
           }
-        }
+          else {
+            $topicImg = 0;
+            $topicThumbnail = 0;
+          }
 
+          $topic->topicImg = $topicImg;
+          $topic->topicThumbnail = $topicThumbnail;
+        }
+        elseif($request->has('topicImg'))
+        {
+
+          if(filter_var($request->input('topicImg'), FILTER_VALIDATE_URL) == true)
+          {
+            $topicImg = $request->input('topicImg');
+            $topicImg = Image::make($topicImg);
+            $ext = 'png';
+            $topicImg->save($imageFile.'/'.$topicSlug.'.'.$ext);
+
+            $topicImg = $imageFile.'/'.$topicSlug.'.'.$ext;
+
+            $topicThumbnail = 'storage/media/topics/image/thumbnails/'.$topicSlug.'_thumbnail.png';
+            $img = Image::make($topicImg);
+
+            list($width, $height) = getimagesize($topicImg);
+            if($width > 500)
+            {
+              $img->resize(500, null, function ($constraint) {
+                  $constraint->aspectRatio();
+              });
+              if($height > 300)
+              {
+                $img->crop(500, 300);
+              }
+            }
+            $img->save($topicThumbnail);
+          } else {
+            $topicImg = 0;
+            $topicThumbnail = 0;
+          }
+
+          $topic->topicImg = $topicImg;
+          $topic->topicThumbnail = $topicThumbnail;
+        }
+        
         if($request->hasFile('topicVideo'))
         {
           $videoFile = 'storage/media/topics/video';

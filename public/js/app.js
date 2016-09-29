@@ -30,7 +30,7 @@ angular.module('remark', ['ui.router', 'angular-loading-bar', 'angularMoment', '
   $mdThemingProvider.theme('default').primaryPalette('grey', { 'hue-1': '50'});
   $locationProvider.html5Mode(true);
   cfpLoadingBarProvider.includeSpinner = false;
-  $showdownProvider.loadExtension('youtube')
+  $showdownProvider.loadExtension('youtube');
 
   $stateProvider
 
