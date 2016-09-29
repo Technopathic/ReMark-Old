@@ -164,6 +164,11 @@ class RemarkAdminsController extends Controller
           {
             if($request->file('topicImg'))
             {
+              $imageFile = 'storage/media/topics/image';
+              if (!is_dir($imageFile)) {
+                mkdir($imageFile,0777,true);
+              }
+
               $topicImg = $request->file('topicImg');
               $ext = $topicImg->getClientOriginalExtension();
               $topicImg->move($imageFile, $topicSlug.'.'.$ext);
@@ -306,6 +311,11 @@ class RemarkAdminsController extends Controller
           {
             if($request->file('topicImg'))
             {
+              $imageFile = 'storage/media/topics/image';
+              if (!is_dir($imageFile)) {
+                mkdir($imageFile,0777,true);
+              }
+
               $topicImg = $request->file('topicImg');
               $ext = $topicImg->getClientOriginalExtension();
               $topicImg->move($imageFile, $topicSlug.'.'.$ext);
@@ -462,6 +472,10 @@ class RemarkAdminsController extends Controller
           {
             if($request->file('topicImg'))
             {
+              $imageFile = 'storage/media/topics/image';
+              if (!is_dir($imageFile)) {
+                mkdir($imageFile,0777,true);
+              }
               $topicImg = $request->file('topicImg');
               $ext = $topicImg->getClientOriginalExtension();
               $topicImg->move($imageFile, $topicSlug.'.'.$ext);
@@ -661,6 +675,11 @@ class RemarkAdminsController extends Controller
         {
           if($request->file('topicImg'))
           {
+            $imageFile = 'storage/media/topics/image';
+            if (!is_dir($imageFile)) {
+              mkdir($imageFile,0777,true);
+            }
+
             $topicImg = $request->file('topicImg');
             $ext = $topicImg->getClientOriginalExtension();
             $topicImg->move($imageFile, $topicSlug.'.'.$ext);
@@ -807,6 +826,11 @@ class RemarkAdminsController extends Controller
         {
           if($request->file('topicImg'))
           {
+            $imageFile = 'storage/media/topics/image';
+            if (!is_dir($imageFile)) {
+              mkdir($imageFile,0777,true);
+            }
+
             $topicImg = $request->file('topicImg');
             $ext = $topicImg->getClientOriginalExtension();
             $topicImg->move($imageFile, $topicSlug.'.'.$ext);
@@ -976,6 +1000,10 @@ class RemarkAdminsController extends Controller
         {
           if($request->file('topicImg'))
           {
+            $imageFile = 'storage/media/topics/image';
+            if (!is_dir($imageFile)) {
+              mkdir($imageFile,0777,true);
+            }
             $topicImg = $request->file('topicImg');
             $ext = $topicImg->getClientOriginalExtension();
             $topicImg->move($imageFile, $topicSlug.'.'.$ext);
@@ -1041,7 +1069,7 @@ class RemarkAdminsController extends Controller
           $topic->topicImg = $topicImg;
           $topic->topicThumbnail = $topicThumbnail;
         }
-        
+
         if($request->hasFile('topicVideo'))
         {
           $videoFile = 'storage/media/topics/video';
